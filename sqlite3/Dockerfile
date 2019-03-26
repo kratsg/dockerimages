@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 MAINTAINER Giordon Stark "kratsg@gmail.com"
 LABEL org.label-schema.vcs-url="https://github.com/kratsg/dockerimages/tree/master/sqlite3"
 LABEL version="latest"
