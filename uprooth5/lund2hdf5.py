@@ -90,24 +90,22 @@ for start, stop, events in tree.iterate(
     branches, entrystop=num_entries, reportentries=True
 ):
     for branch in branches:
-        for ievent, event in enumerate(events[branch]):
-            for ijet, jet_emissions in enumerate(event):
-                try:
-                    num_emissions = min(len(jet_emissions), args.num_emissions)
-                    fp_mmap[itotal + ievent][ijet][
-                        :num_emissions, branches.index(branch)
-                    ] = jet_emissions[:num_emissions]
-                except TypeError:
-                    # this occurs when jet_emissions is a single float, so we broadcast it
-                    fp_mmap[itotal + ievent][ijet][
-                        :, branches.index(branch)
-                    ] = jet_emissions
+        try:
+            fp_mmap[start:stop, :, :, branches.index(branch)] = np.einsum('ij,ij...->ij...', events[branch].pad(args.num_jets, clip=True).fillna(0).regular(), np.ones((stop-start, args.num_jets, args.num_emissions)))
+        except AttributeError:
+            for ievent, event in enumerate(events[branch]):
+                for ijet, jet_emissions in enumerate(event):
+                    if ijet >= args.num_jets: continue
+                    # this occurs when dealing with doubly-nested arrays (jet_emissions properties)
+                    num_emissions = min(len(jet_emissions), 20)
+                    fp_mmap[itotal + ievent, ijet, :, branches.index(branch)] = 0
+                    fp_mmap[itotal + ievent, ijet, :num_emissions, branches.index(branch)] = jet_emissions
     itotal += stop - start
 
 outfilename = args.fname.replace('.root', '.h5')
 print('Creating {}'.format(outfilename))
 with h5py.File(outfilename, 'w') as h5f:
     h5f.create_dataset(args.treename, data=fp_mmap)
-    h5f.create_dataset('branches', data=[b.decode('utf-8') for b in branches])
+    h5f.create_dataset('branches', data=branches, dtype='S34')
 
 del fp_mmap
