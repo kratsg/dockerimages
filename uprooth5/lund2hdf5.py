@@ -96,7 +96,12 @@ for start, stop, events in tree.iterate(
 ):
     for branch in branches:
         try:
-            fp_mmap[start:stop, :, :, branches.index(branch)] = np.einsum('ij,ij...->ij...', events[branch].pad(args.num_jets, clip=True).fillna(0).regular(), np.ones((stop-start, args.num_jets, args.num_emissions)))
+            if type(events[branch]).__module__ == np.__name__:
+                array = np.expand_dims(events[branch], axis=1)
+            else:
+                array = events[branch].pad(args.num_jets, clip=True).fillna(0).regular()
+
+            fp_mmap[start:stop, :, :, branches.index(branch)] = np.einsum('ij,ij...->ij...', array, np.ones((stop-start, args.num_jets, args.num_emissions)))
         except AttributeError:
             for ievent, event in enumerate(events[branch]):
                 for ijet, jet_emissions in enumerate(event):
