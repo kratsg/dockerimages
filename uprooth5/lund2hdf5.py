@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import uproot
 import h5py
 import numpy as np
