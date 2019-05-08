@@ -36,6 +36,11 @@ parser.add_argument(
 args = parser.parse_args()
 
 branches = [
+    b'mcEventWeight',
+    b'NPV',
+    b'averageInteractionsPerCrossing',
+    b'nfatjet',
+    b'fatjet_Ntrk500',
     b'fatjet_pt',
     b'fatjet_eta',
     b'fatjet_eta_detector',
