@@ -109,7 +109,7 @@ for start, stop, events in tree.iterate(
                     # this occurs when dealing with doubly-nested arrays (jet_emissions properties)
                     num_emissions = min(len(jet_emissions), 20)
                     fp_mmap[itotal + ievent, ijet, :, branches.index(branch)] = 0
-                    fp_mmap[itotal + ievent, ijet, :num_emissions, branches.index(branch)] = jet_emissions
+                    fp_mmap[itotal + ievent, ijet, :num_emissions, branches.index(branch)] = jet_emissions[:num_emissions]
     itotal += stop - start
 
 outfilename = args.fname.replace('.root', '.h5')
