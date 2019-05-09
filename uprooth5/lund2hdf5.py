@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(
     description='Convert MLB Lund NTuples to HDF5 files',
     formatter_class=lambda prog: CustomFormatter(prog, max_help_position=30),
 )
-parser.add_argument('fname', type=str, help='File to process')
+parser.add_argument('files', metavar='file', type=str, nargs='+', help='Files to process')
 parser.add_argument('--num-jets', type=int, help='Number of jets per event', default=2)
 parser.add_argument(
     '--num-emissions', type=int, help='Number of emissions per jet', default=20
@@ -32,6 +32,12 @@ parser.add_argument(
     type=str,
     help='Name of tree to use in file',
     default='lundjets_InDetTrackParticles',
+)
+parser.add_argument(
+    '--output',
+    type=str,
+    help='Output name to use',
+    default='output.h5',
 )
 args = parser.parse_args()
 
@@ -77,12 +83,12 @@ branches = [
     b'fatjet_Lund2_DeltaR'
 ]
 
-# open file and get the tree
-f = uproot.open(args.fname)
-tree = f[args.treename]
+# figure out total number of entries (for maxshape)
+num_entries = 0
+for fname in args.files:
+  with uproot.open(fname) as f:
+    num_entries += f[args.treename].numentries
 
-# figure out numvber of entries
-num_entries = args.num_entries if args.num_entries > 0 else tree.numentries
 maxshape = (num_entries, args.num_jets, args.num_emissions, len(branches))
 
 # make memory-mapped file to hold large arrays
@@ -91,30 +97,32 @@ fp_mmap = np.memmap(fname_mmap, dtype=float, mode='w+', shape=maxshape)
 fp_mmap[:] = 1.0
 
 itotal = 0
-for start, stop, events in tree.iterate(
-    branches, entrystop=num_entries, reportentries=True
-):
-    for branch in branches:
-        try:
-            if type(events[branch]).__module__ == np.__name__:
-                array = np.expand_dims(events[branch], axis=1)
-            else:
-                array = events[branch].pad(args.num_jets, clip=True).fillna(0).regular()
+for fname in args.files:
+    print('Processing {}'.format(fname))
+    with uproot.open(fname) as f:
+        tree = f[args.treename]
+        for start, stop, events in tree.iterate(branches, reportentries=True):
+            for branch in branches:
+                try:
+                    if type(events[branch]).__module__ == np.__name__:
+                        array = np.expand_dims(events[branch], axis=1)
+                    else:
+                        array = events[branch].pad(args.num_jets, clip=True).fillna(0).regular()
 
-            fp_mmap[start:stop, :, :, branches.index(branch)] = np.einsum('ij,ij...->ij...', array, np.ones((stop-start, args.num_jets, args.num_emissions)))
-        except AttributeError:
-            for ievent, event in enumerate(events[branch]):
-                for ijet, jet_emissions in enumerate(event):
-                    if ijet >= args.num_jets: continue
-                    # this occurs when dealing with doubly-nested arrays (jet_emissions properties)
-                    num_emissions = min(len(jet_emissions), 20)
-                    fp_mmap[itotal + ievent, ijet, :, branches.index(branch)] = 0
-                    fp_mmap[itotal + ievent, ijet, :num_emissions, branches.index(branch)] = jet_emissions[:num_emissions]
-    itotal += stop - start
+                    fp_mmap[start:stop, :, :, branches.index(branch)] = np.einsum('ij,ij...->ij...', array, np.ones((stop-start, args.num_jets, args.num_emissions)))
+                except AttributeError:
+                    for ievent, event in enumerate(events[branch]):
+                        for ijet, jet_emissions in enumerate(event):
+                            if ijet >= args.num_jets: continue
+                            # this occurs when dealing with doubly-nested arrays (jet_emissions properties)
+                            num_emissions = min(len(jet_emissions), 20)
+                            fp_mmap[itotal + ievent, ijet, :, branches.index(branch)] = 0
+                            fp_mmap[itotal + ievent, ijet, :num_emissions, branches.index(branch)] = jet_emissions[:num_emissions]
+            itotal += stop - start
+            print('  {0: 3.2f}% ({1:d}/{2:d})'.format(100.0*itotal/num_entries, itotal, num_entries))
 
-outfilename = args.fname.replace('.root', '.h5')
-print('Creating {}'.format(outfilename))
-with h5py.File(outfilename, 'w') as h5f:
+print('Creating {}'.format(args.output))
+with h5py.File(args.output, 'w') as h5f:
     h5f.create_dataset(args.treename, data=fp_mmap)
     h5f.create_dataset('branches', data=branches, dtype='S34')
 
