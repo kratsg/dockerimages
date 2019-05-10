@@ -40,6 +40,7 @@ parser.add_argument(
     default='output.h5',
 )
 args = parser.parse_args()
+print(args)
 
 branches = [
     b'mcEventWeight',
@@ -94,8 +95,10 @@ branches = [
 # figure out total number of entries (for maxshape)
 num_entries = 0
 for fname in args.files:
+  print('Counting entries in {}'.format(fname))
   with uproot.open(fname) as f:
     num_entries += f[args.treename].numentries
+    print('  has {0:d} entries'.format(f[args.treename].numentries))
 
 maxshape = (num_entries, args.num_jets, args.num_emissions, len(branches))
 
