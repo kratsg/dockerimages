@@ -63,7 +63,7 @@ branches = [
     b'fatjet_D2',
     b'fatjet_assoc_tracks_pt',
     b'fatjet_assoc_tracks_eta',
-    b'fatjet_assoc_tracks_phi'
+    b'fatjet_assoc_tracks_phi',
     b'fatjet_truth_pt',
     b'fatjet_truth_eta',
     b'fatjet_truth_phi',
