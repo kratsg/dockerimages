@@ -8,7 +8,8 @@ ENV PATH $PATH:/home/root/pandamonium
 ENV X509_USER_CERT /root/.globus/usercert.pem
 ENV X509_USER_KEY /root/.globus/userkey.pem
 RUN yum install -y libffi-devel openssl-devel && \
-    yum install -y python3 voms-clients && \
+    yum install -y cpp gcc && \
+    yum install -y python3 python3-devel voms-clients && \
     yum install -y ca-policy-egi-core wlcg-voms-atlas && \
     yum install -y git && \
     yum clean all && \
