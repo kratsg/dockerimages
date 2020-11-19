@@ -8,7 +8,8 @@ ADD files/rucio.cfg /usr/local/etc/rucio.cfg
 ENV PATH $PATH:/home/root/pandamonium
 ENV X509_USER_CERT /root/.globus/usercert.pem
 ENV X509_USER_KEY /root/.globus/userkey.pem
-RUN yum install -y libffi-devel openssl-devel && \
+RUN yum clean expire-cache && \
+    yum install -y libffi-devel openssl-devel && \
     yum install -y cpp gcc && \
     yum install -y python3 python3-devel voms-clients && \
     yum install -y ca-policy-egi-core wlcg-voms-atlas && \
