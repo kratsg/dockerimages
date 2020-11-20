@@ -19,6 +19,7 @@ jobs:
       with:
         repository: kratsg/voms-atlas
         dockerfile: voms-atlas/Dockerfile
+        path: voms-atlas
         tags: test
         tag_with_sha: true
         tag_with_ref: true
