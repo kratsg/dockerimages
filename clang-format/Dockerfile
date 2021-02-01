@@ -5,7 +5,7 @@ RUN apk update && apk add git build-base ninja cmake python3
 
 # Pass `--build-arg LLVM_TAG=master` for latest llvm commit
 ARG LLVM_TAG
-ENV LLVM_TAG ${LLVM_TAG:-llvmorg-9.0.0}
+ENV LLVM_TAG ${LLVM_TAG:-llvmorg-9.0.1}
 
 # Download and setup
 WORKDIR /build
