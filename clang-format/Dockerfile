@@ -28,7 +28,8 @@ WORKDIR /workdir
 
 COPY --from=clang-format-build /build/llvm-project/llvm/build/bin/clang-format /usr/bin
 COPY git-clang-format /bin/git-clang-format
+COPY run-clang-format /bin/run-clang-format
 RUN apk add python3
 
-ENTRYPOINT ["clang-format"]
-CMD ["--help"]
+ENTRYPOINT ["run-clang-format"]
+CMD ["-r", "."]
