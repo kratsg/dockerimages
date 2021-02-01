@@ -20,7 +20,7 @@ RUN cmake -GNinja -DLLVM_BUILD_STATIC=ON -DLLVM_ENABLE_LIBCXX=ON ..
 RUN ninja clang-format
 
 # Install
-FROM alpine:latest
+FROM alpine/git:latest
 
 LABEL io.whalebrew.name 'clang-format'
 LABEL io.whalebrew.config.working_dir '/workdir'
