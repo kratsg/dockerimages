@@ -27,6 +27,8 @@ LABEL io.whalebrew.config.working_dir '/workdir'
 WORKDIR /workdir
 
 COPY --from=clang-format-build /build/llvm-project/llvm/build/bin/clang-format /usr/bin
+COPY git-clang-format /bin/git-clang-format
+RUN apk add python3
 
 ENTRYPOINT ["clang-format"]
 CMD ["--help"]
