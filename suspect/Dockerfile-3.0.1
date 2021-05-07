@@ -1,0 +1,13 @@
+FROM atlasamglab/root-base
+
+RUN mkdir /opt/suspect3 && \
+    wget -O suspect3.tar.gz http://suspect.in2p3.fr/tar/suspect-3.0.1.tar.gz && \
+    tar -xzvf suspect3.tar.gz --directory /opt/suspect3/ && \
+    rm suspect3.tar.gz && \
+    sed -i -E 's/(real|imag)\(\) ?= ?([^;]+);/\1(\2);/g' /opt/suspect3/src/RadCorrHiggs.cxx && \
+    cd /opt/suspect3 && \
+    ./configure --with-root=/code/build && \
+    make
+
+ENTRYPOINT ["/opt/suspect3/suspect3"]
+CMD [ "-d", "/opt/suspect3/examples/CompressedSuSy.in" ]
