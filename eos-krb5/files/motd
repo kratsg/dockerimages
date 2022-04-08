@@ -1,0 +1,24 @@
+             _____ ___  ____        _  ______  ____ ____
+            | ____/ _ \/ ___|      | |/ /  _ \| __ ) ___|
+            |  _|| | | \___ \ _____| ' /| |_) |  _ \___ \
+            | |__| |_| |___) |_____| . \|  _ <| |_) |__) |
+            |_____\___/|____/      |_|\_\_| \_\____/____/
+
+ 
+This is a self-contained image that contains the eos client (with fuse) and
+krb5 support for authentication. For information about eos, refer to the
+documentation
+
+      https://eos-docs.web.cern.ch/
+
+For information about kerberos, refer to CERN's documentation
+
+      https://linux.web.cern.ch/docs/kerberos-access/
+
+The default EOS management url (EOS_MGM_URL) is set to root://eosuser.cern.ch/.
+Feel free to override this as needed. To get started, try
+
+      $ kinit username@CERN.CH
+      $ eos whoami
+
+
