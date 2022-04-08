@@ -1,3 +1,4 @@
+# Container Registry: https://gitlab.cern.ch/dss/eos/container_registry/10186
 FROM gitlab-registry.cern.ch/dss/eos/eos-fusex:4.8.56
 
 ENV EOS_MGM_URL=root://eosuser.cern.ch
