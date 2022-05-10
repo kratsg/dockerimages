@@ -1,0 +1,6 @@
+# must be ended with a new line "LF" (Unix) and not "CRLF" (Windows)
+SHELL=/bin/bash
+BASH_ENV=/app/container.env
+0 1 * * * printf "${CERN_PASS}" | kinit ${CERN_USER}@CERN.CH >> /var/log/cron.log 2>&1
+# An empty line is required at the end of this file for a valid cron file.
+
