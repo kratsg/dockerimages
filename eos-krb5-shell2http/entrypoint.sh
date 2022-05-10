@@ -8,6 +8,9 @@ fi
 
 declare -p | grep -E '(CERN|EOS)' > /app/container.env || true
 
+# initialize kerberos
+printf "${CERN_PASS}" | kinit ${CERN_USER}@CERN.CH >> /var/log/cron.log 2>&1
+
 crontab /etc/cron.d/kinit-cron
 crond
 
