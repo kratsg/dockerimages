@@ -6,7 +6,7 @@ if [ -z "${CERN_USER}" ] || [ -z "${CERN_PASS}" ]; then
   exit 1
 fi
 
-declare -p | grep -E 'CERN_' > /app/container.env || true
+declare -p | grep -E '(CERN|EOS)' > /app/container.env || true
 
 crontab /etc/cron.d/kinit-cron
 crond
