@@ -26,4 +26,4 @@ COPY generate-token.sh .
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["-form", "-cgi", \
-     "/generate-token", "./generate-token.sh", "/log", "cat /var/log/cron.log", "/klist", "/usr/bin/klist"]
+     "/generate-token", "./generate-token.sh", "/log", "cat /var/log/cron.log", "/klist", "/usr/bin/klist || true"]
