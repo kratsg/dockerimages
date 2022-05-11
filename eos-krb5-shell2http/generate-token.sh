@@ -28,5 +28,7 @@ then
   exit 0
 fi
 
-TOKEN=$(eos token --path "${v_path}" --permissions "${PERMISSIONS}")
-printf "{\"token\": \"${TOKEN}\", \"path\": \"${v_path}\", \"permissions\": \"${PERMISSIONS}\", \"message\": \"${MESSAGE}\"}"
+TOKEN="$(eos token --path "${v_path}" --permission "${PERMISSIONS}")"
+ESCAPED_TOKEN=$(echo ${TOKEN} | sed 's/%/%%/g')
+print_header
+printf "{\"token\": \"${ESCAPED_TOKEN}\", \"path\": \"${v_path}\", \"permissions\": \"${PERMISSIONS}\", \"message\": \"${MESSAGE}\"}"
