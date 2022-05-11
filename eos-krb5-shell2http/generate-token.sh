@@ -17,6 +17,8 @@ if [ ! ${v_path+x} ]; then
   exit 0
 fi
 
+PERMISSIONS=${v_permissions:-r}
+
 if ! klist 2> /dev/null | grep -q "principal: ${CERN_USER}@CERN.CH"
 then
   STATUS=503
@@ -26,5 +28,5 @@ then
   exit 0
 fi
 
-TOKEN=$(eos token --path "${v_path}")
-printf "{\"token\": \"${TOKEN}\", \"path\": \"${v_path}\", \"message\": \"${MESSAGE}\"}"
+TOKEN=$(eos token --path "${v_path}" --permissions "${PERMISSIONS}")
+printf "{\"token\": \"${TOKEN}\", \"path\": \"${v_path}\", \"permissions\": \"${PERMISSIONS}\", \"message\": \"${MESSAGE}\"}"
