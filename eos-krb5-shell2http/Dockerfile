@@ -24,6 +24,7 @@ COPY entrypoint.sh /entrypoint.sh
 COPY generate-token.sh .
 COPY ls.sh .
 COPY mkdir.sh .
+COPY rmdir.sh .
 
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
@@ -32,4 +33,5 @@ CMD ["-form", "-cgi", \
      "/log", "cat /var/log/cron.log", \
      "/klist", "/usr/bin/klist || true", \
      "/ls", "./ls.sh", \
-     "/mkdir", "./mkdir.sh"]
+     "/mkdir", "./mkdir.sh" \
+     "/rmdir", "./rmdir.sh"]
