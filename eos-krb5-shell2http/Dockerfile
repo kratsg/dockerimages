@@ -23,6 +23,7 @@ RUN yum clean expire-cache && \
 COPY entrypoint.sh /entrypoint.sh
 COPY generate-token.sh .
 COPY ls.sh .
+COPY mkdir.sh .
 
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
@@ -30,4 +31,5 @@ CMD ["-form", "-cgi", \
      "/generate-token", "./generate-token.sh", \
      "/log", "cat /var/log/cron.log", \
      "/klist", "/usr/bin/klist || true", \
-     "/ls", "./ls.sh"]
+     "/ls", "./ls.sh", \
+     "/mkdir", "./mkdir.sh"]
