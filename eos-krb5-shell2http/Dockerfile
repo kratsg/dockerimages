@@ -33,5 +33,5 @@ CMD ["-form", "-cgi", \
      "/log", "cat /var/log/cron.log", \
      "/klist", "/usr/bin/klist || true", \
      "/ls", "./ls.sh", \
-     "/mkdir", "./mkdir.sh" \
+     "/mkdir", "./mkdir.sh", \
      "/rmdir", "./rmdir.sh"]
