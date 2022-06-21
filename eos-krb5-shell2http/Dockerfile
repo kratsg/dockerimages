@@ -14,7 +14,7 @@ COPY --from=builder /code/shell2http .
 COPY kinit-cron /etc/cron.d/kinit-cron
 
 RUN yum clean expire-cache && \
-    yum install -y cronie && \
+    yum install -y cronie jq && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     chmod 0644 /etc/cron.d/kinit-cron && \
@@ -22,8 +22,12 @@ RUN yum clean expire-cache && \
 
 COPY entrypoint.sh /entrypoint.sh
 COPY generate-token.sh .
+COPY ls.sh .
 
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["-form", "-cgi", \
-     "/generate-token", "./generate-token.sh", "/log", "cat /var/log/cron.log", "/klist", "/usr/bin/klist || true"]
+     "/generate-token", "./generate-token.sh", \
+     "/log", "cat /var/log/cron.log", \
+     "/klist", "/usr/bin/klist || true", \
+     "/ls", "./ls.sh"]
