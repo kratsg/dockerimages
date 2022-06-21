@@ -29,9 +29,9 @@ COPY rmdir.sh .
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["-form", "-cgi", \
-     "/generate-token", "./generate-token.sh", \
+     "POST:/generate-token", "./generate-token.sh", \
      "/log", "cat /var/log/cron.log", \
      "/klist", "/usr/bin/klist || true", \
-     "/ls", "./ls.sh", \
-     "/mkdir", "./mkdir.sh", \
-     "/rmdir", "./rmdir.sh"]
+     "GET:/path", "./ls.sh", \
+     "PUT:/path", "./mkdir.sh", \
+     "DELETE:/path", "./rmdir.sh"]
