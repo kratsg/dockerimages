@@ -26,6 +26,15 @@ then
   exit 0
 fi
 
-CONTENT="$(eos ls "${v_path}" | jq --raw-input . | jq -c --slurp .)"
+OUTPUT=$((eos ls "${v_path}") 2>&1)
+
+if [ $? -ne 0 ]
+then
+  STATUS=500
+  MESSAGE="${OUTPUT}"
+  OUTPUT=""
+fi
+CONTENT="$(printf "${OUTPUT}" | jq --raw-input . | jq -c --slurp .)"
+
 print_header
 printf "{\"content\": ${CONTENT}, \"path\": \"${v_path}\", \"message\": \"${MESSAGE}\"}"
