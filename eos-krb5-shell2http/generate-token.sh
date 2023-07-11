@@ -28,7 +28,17 @@ then
   exit 0
 fi
 
-TOKEN="$(eos token --path "${v_path}" --permission "${PERMISSIONS}")"
-ESCAPED_TOKEN=$(echo ${TOKEN} | sed 's/%/%%/g')
+TOKEN=$((eos token --path "${v_path}" --permission "${PERMISSIONS}") 2>&1)
+
+if [ $? -ne 0 ]
+then
+  STATUS=500
+  MESSAGE="${TOKEN}"
+  TOKEN=""
+  ESCAPED_TOKEN=""
+else
+  ESCAPED_TOKEN=$(echo ${TOKEN} | sed 's/%/%%/g')
+fi
+
 print_header
 printf "{\"token\": \"${ESCAPED_TOKEN}\", \"path\": \"${v_path}\", \"permissions\": \"${PERMISSIONS}\", \"message\": \"${MESSAGE}\"}"
