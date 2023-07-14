@@ -31,6 +31,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 CMD ["-form", "-cgi", \
      "POST:/generate-token", "./generate-token.sh", \
      "/log", "cat /var/log/cron.log", \
+     "/ps", "ps aux", \
      "/klist", "/usr/bin/klist || true", \
      "GET:/path", "./ls.sh", \
      "PUT:/path", "./mkdir.sh", \
