@@ -27,4 +27,4 @@ else
 fi
 
 print_header
-printf "{\"content\": ${CONTENT}, \"path\": \"${v_path}\", \"message\": \"${MESSAGE}\"}"
+printf "{\"content\": ${CONTENT}, \"pattern\": \"${v_pattern}\", \"message\": \"${MESSAGE}\", \"output\": ${OUTPUT}}"
