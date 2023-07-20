@@ -99,7 +99,7 @@ jobs:
         ssh-private-key: ${{ secrets.GITLAB_SSH_KEY }}
     - name: Clone pyphonebook
       run: |
-        git clone --depth 1 --branch v2.1.5-1 ssh://git@gitlab.cern.ch:7999/linuxsupport/rpms/pyphonebook.git cern-phonebook/pyphonebook
+        git -c core.sshCommand='ssh -o StrictHostKeyChecking=accept-new' clone --depth 1 --branch v2.1.5-1 ssh://git@gitlab.cern.ch:7999/linuxsupport/rpms/pyphonebook.git cern-phonebook/pyphonebook
         make -C pyphonebook setversion
     - name: Build Docker image
       if: "!(startsWith(github.ref, 'refs/tags/'))"
