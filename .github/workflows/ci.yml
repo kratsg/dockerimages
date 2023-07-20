@@ -86,3 +86,23 @@ jobs:
         push: false
     - name: List Built Images
       run: docker images
+
+  test-cern-phonebook:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Docker image
+      if: "!(startsWith(github.ref, 'refs/tags/'))"
+      uses: docker/build-push-action@v1
+      with:
+        repository: kratsg/cern-phonebook
+        dockerfile: cern-phonebook/Dockerfile
+        path: cern-phonebook
+        tags: test
+        tag_with_sha: true
+        tag_with_ref: true
+        push: false
+    - name: List Built Images
+      run: docker images
