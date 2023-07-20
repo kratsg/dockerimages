@@ -116,7 +116,7 @@ jobs:
     - name: Clone pyphonebook
       run: |
         git -c core.sshCommand='ssh -o StrictHostKeyChecking=accept-new' clone --depth 1 --branch v2.1.5-1 ssh://git@gitlab.cern.ch:7999/linuxsupport/rpms/pyphonebook.git cern-phonebook/pyphonebook
-        make -C pyphonebook setversion
+        make -C cern-phonebook/pyphonebook setversion
     - name: Build and Publish to Registry
       if: "!(startsWith(github.ref, 'refs/tags/'))"
       uses: docker/build-push-action@v4
