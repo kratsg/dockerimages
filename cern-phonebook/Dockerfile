@@ -11,7 +11,9 @@ FROM ${BASE_IMAGE}
 WORKDIR /app
 COPY --from=builder /code/shell2http .
 
-RUN apt-get clean autoclean && \
+RUN apt-get update && \
+    apt-get install -y jq && \
+    apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
     cpanm install Date::Manip Net::LDAP && \
