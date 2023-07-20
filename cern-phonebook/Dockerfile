@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=perl
+ARG BASE_IMAGE=python:3
 FROM ${BASE_IMAGE} as builder
 WORKDIR /code/
 
@@ -11,17 +11,18 @@ FROM ${BASE_IMAGE}
 WORKDIR /app
 COPY --from=builder /code/shell2http .
 
+COPY entrypoint.sh /entrypoint.sh
+COPY pyphonebook pyphonebook/
+COPY lookup.sh .
+
 RUN apt-get update && \
-    apt-get install -y jq && \
     apt-get clean autoclean && \
     apt-get autoremove --yes && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
-    cpanm install Date::Manip Net::LDAP && \
-    rm -rf /root/.cpanm
-
-COPY entrypoint.sh /entrypoint.sh
-COPY phonebook /bin/phonebook
-COPY lookup.sh .
+    python -m venv venv && \
+    ./venv/bin/python -m pip install -U pip && \
+    ./venv/bin/python -m pip install ldap3 && \
+    ./venv/bin/python -m pip install ./pyphonebook
 
 EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]

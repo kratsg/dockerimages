@@ -109,6 +109,14 @@ jobs:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Login to CERN GitLab
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.GITLAB_SSH_KEY }}
+    - name: Clone pyphonebook
+      run: |
+        git clone --depth 1 --branch v2.1.5-1 ssh://git@gitlab.cern.ch:7999/linuxsupport/rpms/pyphonebook.git cern-phonebook/pyphonebook
+        make -C pyphonebook setversion
     - name: Build and Publish to Registry
       if: "!(startsWith(github.ref, 'refs/tags/'))"
       uses: docker/build-push-action@v4
