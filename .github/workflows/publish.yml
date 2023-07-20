@@ -93,35 +93,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build and Publish to Registry
       if: "!(startsWith(github.ref, 'refs/tags/'))"
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v4
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: kratsg/cern-phonebook
         dockerfile: cern-phonebook/Dockerfile
-        path: cern-phonebook
-        tags: latest
-    - name: Build and Publish to GitHub Registry
-      if: "!(startsWith(github.ref, 'refs/tags/'))"
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: ghcr.io/kratsg/cern-phonebook
-        dockerfile: cern-phonebook/Dockerfile
-        path: cern-phonebook
-        tags: latest
+        context: cern-phonebook
+        tags: |
+          kratsg/cern-phonebook:latest
+          ghcr.io/kratsg/cern-phonebook:latest
     - name: Build and Publish to Registry with Release Tag
       if: startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v4
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: kratsg/cern-phonebook
         dockerfile: cern-phonebook/Dockerfile
-        path: cern-phonebook
-        tags: latest,latest-stable
+        context: cern-phonebook
+        tags: |
+          kratsg/cern-phonebook:latest
+          kratsg/cern-phonebook:latest-stable
+          ghcr.io/kratsg/cern-phonebook:latest
+          ghcr.io/kratsg/cern-phonebook:latest-stable
         tag_with_ref: true
