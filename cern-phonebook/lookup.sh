@@ -24,6 +24,7 @@ then
   CONTENT=""
 else
   CONTENT=$(printf "${OUTPUT}" | grep -v '^#' | grep -v '^Login' | tr -s '\n' | jq -sR 'split("\n") | map(split(":")) | map(select(length > 0)) | map({(.[0]): (.[1:] | join(":") | sub("^[[:space:]]+"; "") | sub("[[:space:]]+$"; ""))}) | add' | jq '."Computer account(s)" = (to_entries[(to_entries | map(.key == "Computer account(s)") | index(true))+1:] | map([.key, .value] | join(":")))' | jq 'with_entries(select(.key | test("^[a-z]") | not))')
+  OUTPUT=$(printf '%s\n' ${OUTPUT} | perl -e 'chomp(@a=<>); print join ("\\n", @a), "\n"')
 fi
 
 print_header
