@@ -113,8 +113,10 @@ jobs:
       if: "!(startsWith(github.ref, 'refs/tags/'))"
       uses: docker/build-push-action@v4
       with:
+        platforms: linux/amd64,linux/arm64
         dockerfile: cern-phonebook/Dockerfile
         context: cern-phonebook
+        push: true
         tags: |
           kratsg/cern-phonebook:latest
           ghcr.io/kratsg/cern-phonebook:latest
@@ -122,8 +124,10 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: docker/build-push-action@v4
       with:
+        platforms: linux/amd64,linux/arm64
         dockerfile: cern-phonebook/Dockerfile
         context: cern-phonebook
+        push: true
         tags: |
           kratsg/cern-phonebook:latest
           kratsg/cern-phonebook:latest-stable
