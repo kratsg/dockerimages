@@ -51,4 +51,4 @@ then
 fi
 
 print_header
-printf "{\"pattern\": \"${v_pattern}\", \"message\": \"${MESSAGE}\", \"output\": \"${OUTPUT}\"}"
+printf "{\"pattern\": \"${v_pattern}\", \"message\": \"${MESSAGE}\", \"output\": ${OUTPUT}}"
