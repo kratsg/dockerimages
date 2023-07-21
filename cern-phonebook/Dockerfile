@@ -1,13 +1,15 @@
-ARG BASE_IMAGE=python:3
+ARG BASE_IMAGE=registry.access.redhat.com/ubi8/python-39
 FROM ${BASE_IMAGE} as builder
+USER root
 WORKDIR /code/
 
-RUN apt-get update && \
-    apt-get install -y golang && \
+RUN dnf clean expire-cache && \
+    dnf install -y golang && \
     go install github.com/msoap/shell2http@latest && \
     cp $(go env GOPATH)/bin/shell2http .
 
 FROM ${BASE_IMAGE}
+USER root
 WORKDIR /app
 COPY --from=builder /code/shell2http .
 
@@ -15,10 +17,10 @@ COPY entrypoint.sh /entrypoint.sh
 COPY pyphonebook pyphonebook/
 COPY lookup.sh .
 
-RUN apt-get update && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
+RUN dnf clean expire-cache && \
+    dnf install -y cronie jq && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf && \
     python -m venv venv && \
     ./venv/bin/python -m pip install -U pip && \
     ./venv/bin/python -m pip install ldap3 && \
