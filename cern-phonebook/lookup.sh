@@ -15,17 +15,40 @@ if [ ! ${v_pattern+x} ]; then
   exit 0
 fi
 
-OUTPUT=$((phonebook --all "${v_pattern}") 2>&1)
+OUTPUT=$((/app/venv/bin/pyphonebook \
+  --json "surname" \
+  --json "firstname" \
+  --json "login" \
+  --json "department" \
+  --json "group" \
+  --json "cerngroup" \
+  --json "cernsection" \
+  --json "displayname" \
+  --json "phone" \
+  --json "otherphone" \
+  --json "mobile" \
+  --json "fax" \
+  --json "office" \
+  --json "pobox" \
+  --json "email" \
+  --json "organization" \
+  --json "ccid" \
+  --json "homedir" \
+  --json "last" \
+  --json "uid" \
+  --json "gid" \
+  --json "uac" \
+  --json "type" \
+  --json "emailnick" \
+  --json "company" \
+  --json "shell" \
+  --json "secid" \
+  "${v_pattern}") 2>&1)
 
 if [ $? -ne 0 ]
 then
   STATUS=500
-  MESSAGE="${OUTPUT}"
-  CONTENT=""
-else
-  CONTENT=$(printf "${OUTPUT}" | grep -v '^#' | grep -v '^Login' | tr -s '\n' | jq -sR 'split("\n") | map(split(":")) | map(select(length > 0)) | map({(.[0]): (.[1:] | join(":") | sub("^[[:space:]]+"; "") | sub("[[:space:]]+$"; ""))}) | add' | jq '."Computer account(s)" = (to_entries[(to_entries | map(.key == "Computer account(s)") | index(true))+1:] | map([.key, .value] | join(":")))' | jq 'with_entries(select(.key | test("^[a-z]") | not))')
-  OUTPUT=$(printf '%s\n' ${OUTPUT} | perl -e 'chomp(@a=<>); print join ("\\\\n", @a), "\n"')
 fi
 
 print_header
-printf "{\"content\": ${CONTENT}, \"pattern\": \"${v_pattern}\", \"message\": \"${MESSAGE}\", \"output\": \"${OUTPUT}\"}"
+printf "{\"pattern\": \"${v_pattern}\", \"message\": \"${MESSAGE}\", \"output\": ${OUTPUT}}"
