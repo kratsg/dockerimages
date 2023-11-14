@@ -28,7 +28,8 @@ then
   exit 0
 fi
 
-TOKEN=$((eos token --path "${v_path}" --permission "${PERMISSIONS}") 2>&1)
+EXPIRES=$(date -d "+ 10 minutes" +%s)
+TOKEN=$((eos token --path "${v_path}" --permission "${PERMISSIONS}" --expires "${EXPIRES}") 2>&1)
 
 if [ $? -ne 0 ]
 then
