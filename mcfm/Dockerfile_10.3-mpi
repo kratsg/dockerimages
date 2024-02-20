@@ -1,0 +1,68 @@
+# https://mcfm.fnal.gov/
+ARG BUILDER_IMAGE=python:3.11-buster
+
+FROM ${BUILDER_IMAGE} as builder
+ARG MCFM_VERSION=10.3
+ARG LHAPDF_VERSION=6.5.4
+LABEL org.opencontainers.image.version=${MCFM_VERSION}
+LABEL org.opencontainers.image.ref.name=latest
+
+USER root
+WORKDIR /code
+
+SHELL [ "/bin/bash", "-c" ]
+
+RUN apt-get -qq -y update && \
+    apt-get -qq -y install \
+      gcc \
+      g++ \
+      gfortran \
+      cmake \
+      make \
+      vim \
+      zlibc \
+      zlib1g-dev \
+      libbz2-dev \
+      rsync \
+      bash-completion \
+      python3-dev \
+      less \
+      coreutils \
+      wget \
+      mpich && \
+    apt-get -y autoclean && \
+    apt-get -y autoremove && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install LHAPDF
+RUN wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-${LHAPDF_VERSION}.tar.gz -O LHAPDF-${LHAPDF_VERSION}.tar.gz && \
+    tar xvfz LHAPDF-${LHAPDF_VERSION}.tar.gz && \
+    cd LHAPDF-${LHAPDF_VERSION} && \
+    ./configure --help && \
+    export CXX=$(which g++) && \
+    export PYTHON=$(which python) && \
+    ./configure \
+      --prefix=/usr/local && \
+    make -j$(($(nproc) - 1)) && \
+    make install && \
+    chmod a+w /usr/local/share/LHAPDF/
+
+# Install MCFM
+RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERSION}.tar.gz -O MCFM-${MCFM_VERSION}.tar.gz && \
+    tar xzf MCFM-${MCFM_VERSION}.tar.gz && \
+    cd MCFM-${MCFM_VERSION}/Bin && \
+    cmake -S .. -B . \
+      -Duse_internal_lhapdf=OFF \
+      -Duse_mpi=ON \
+      -DCMAKE_C_COMPILER=mpicc \
+      -DCMAKE_CXX_COMPILER=mpic++ \
+      -DCMAKE_Fortran_COMPILER=mpifort && \
+    cmake --build . -- -j$(($(nproc) - 1))
+
+ENV PATH=/code/MCFM-${MCFM_VERSION}/Bin:$PATH
+ENV OMP_STACKSIZE=16000
+
+WORKDIR /code/MCFM-${MCFM_VERSION}/Bin
+
+ENTRYPOINT ["./mcfm"]
+CMD ["/bin/bash"]
