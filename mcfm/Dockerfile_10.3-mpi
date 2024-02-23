@@ -12,6 +12,9 @@ WORKDIR /code
 
 SHELL [ "/bin/bash", "-c" ]
 
+COPY ./files/gencuts_input.f .
+COPY ./files/input_CollinearW+.ini .
+
 RUN apt-get -qq -y update && \
     apt-get -qq -y install \
       gcc \
@@ -50,13 +53,16 @@ RUN wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-
 # Install MCFM
 RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERSION}.tar.gz -O MCFM-${MCFM_VERSION}.tar.gz && \
     tar xzf MCFM-${MCFM_VERSION}.tar.gz && \
+    mv ./gencuts_input.f MCFM-${MCFM_VERSION}/src/Cuts/gencuts_input.f && \
+    mv ./input_CollinearW+.ini MCFM-${MCFM_VERSION}/Bin/input_CollinearW+.ini && \
     cd MCFM-${MCFM_VERSION}/Bin && \
     cmake -S .. -B . \
       -Duse_internal_lhapdf=OFF \
       -Duse_mpi=ON \
       -DCMAKE_C_COMPILER=mpicc \
       -DCMAKE_CXX_COMPILER=mpic++ \
-      -DCMAKE_Fortran_COMPILER=mpifort && \
+      -DCMAKE_Fortran_COMPILER=mpifort \
+      -Dwith_vvamp=OFF && \
     cmake --build . -- -j$(($(nproc) - 1))
 
 ENV PATH=/code/MCFM-${MCFM_VERSION}/Bin:$PATH
