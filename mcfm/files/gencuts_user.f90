@@ -59,7 +59,12 @@ submodule (m_gencuts) m_gencuts_user
       implicit none
       include 'mxpart.f'
       include 'runstring.f'
+      include 'constants.f'
+      include 'nf.f'
+      include 'cplx.h'
       include 'leptcuts.f'
+      include 'jetcuts.f'
+
       logical :: gencuts_user
       real(dp), intent(in) :: pjet(mxpart,4)
       integer, intent(in) :: njets
@@ -73,9 +78,9 @@ submodule (m_gencuts) m_gencuts_user
       real(dp) :: etall,yll, ptll, pttwo
 
       real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
-      logical :: is_inclusive, is_inclusive2j, is_collinear
+      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton
       integer :: countlept, jetindex(mxpart), leptindex(mxpart)
-      integer :: ijet
+      integer :: j,ijet
 
       ! implement your own cuts here
 
@@ -84,6 +89,17 @@ submodule (m_gencuts) m_gencuts_user
       is_collinear = index(runstring, "collinear") /= 0
 
       if (any((/is_inclusive, is_inclusive2j, is_collinear/))) then
+
+        countlept=0
+        do j=3,mxpart
+          if (is_lepton(j)) then
+            countlept=countlept+1
+            leptindex(countlept)=j
+          endif
+        enddo
+
+        write(6,*) 'giordon = ',countlept
+
         ! number of leptons
         if(countlept /= 1) then
           gencuts_user=.true.
