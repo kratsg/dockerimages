@@ -44,6 +44,7 @@ c--- note that pjet has mxpart entries
 
       phi1=atan2(pjet(ilep,1),pjet(ilep,2))
       phi2=atan2(pjet(ijet,1),pjet(ijet,2))
+
       dphi=phi1-phi2
       if (dphi > pi) dphi=twopi-dphi
       if (dphi < -pi) dphi=twopi+dphi

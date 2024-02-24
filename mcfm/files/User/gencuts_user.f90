@@ -126,7 +126,7 @@ submodule (m_gencuts) m_gencuts_user
 
         ! angular separation of leptons and jets
         do ijet=1,njets
-          if(deltarlepjet(leptindex(1),ijet,pjet) < 0.4) then
+          if(deltarlepjet(leptindex(1),jetindex(ijet),pjet) < 0.4) then
             gencuts_user=.true.
             return
           endif
@@ -147,8 +147,9 @@ submodule (m_gencuts) m_gencuts_user
         if(is_collinear) then
           mindeltarlepjet = 100._dp
           do ijet=1,njets
+            if(jetindex(ijet) == leptindex(1)) cycle
             if(pt(jetindex(ijet), pjet) < 100.0) cycle
-            mindeltarlepjet = min(deltarlepjet(leptindex(1),ijet,pjet), mindeltarlepjet)
+            mindeltarlepjet = min(deltarlepjet(leptindex(1),jetindex(ijet),pjet), mindeltarlepjet)
           enddo
 
           if(mindeltarlepjet > 2.6) then
