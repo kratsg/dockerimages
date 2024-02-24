@@ -41,6 +41,7 @@ submodule (m_gencuts) m_gencuts_user
       include 'cplx.h'
       include 'leptcuts.f'
       include 'jetcuts.f'
+      include 'taucut.f'! for usescet
 
       logical :: gencuts_user
       real(dp), intent(in) :: pjet(mxpart,4)
@@ -55,7 +56,7 @@ submodule (m_gencuts) m_gencuts_user
       real(dp) :: etall,yll, ptll, pttwo
 
       real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
-      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton, is_hadronic, usescet
+      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton, is_hadronic
       integer :: countjet, countlept, jetindex(mxpart), leptindex(mxpart)
       integer :: j,ijet
 
@@ -90,8 +91,6 @@ submodule (m_gencuts) m_gencuts_user
         if (countjet > njets) countjet=countjet-1
         ! for SCET case, there can be up to two extra jets present
         if (usescet .and. (countjet > njets)) countjet=countjet-1
-
-        write(6,*) 'after  giordon = ',leptindex(1)
 
         ! number of leptons
         if(countlept /= 1) then
