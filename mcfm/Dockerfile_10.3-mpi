@@ -54,7 +54,7 @@ RUN wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-
 RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERSION}.tar.gz -O MCFM-${MCFM_VERSION}.tar.gz && \
     tar xzf MCFM-${MCFM_VERSION}.tar.gz && \
     mv ./gencuts_user.f90 MCFM-${MCFM_VERSION}/src/User/gencuts_user.f90 && \
-    mv ./deltarj.f MCFM-${MCFM_VERSION}/Cuts/deltarj.f && \
+    mv ./deltarj.f MCFM-${MCFM_VERSION}/src//Cuts/deltarj.f && \
     cd MCFM-${MCFM_VERSION}/Bin && \
     cmake -S .. -B . \
       -Duse_internal_lhapdf=OFF \
