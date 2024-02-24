@@ -12,9 +12,8 @@ WORKDIR /code
 
 SHELL [ "/bin/bash", "-c" ]
 
-COPY ./files/gencuts_user.f90 .
-COPY ./files/CollinearW.ini .
-COPY ./files/deltarj.f .
+COPY ./files/User/gencuts_user.f90 .
+COPY ./files/Cuts/deltarj.f .
 
 RUN apt-get -qq -y update && \
     apt-get -qq -y install \
@@ -55,7 +54,6 @@ RUN wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-
 RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERSION}.tar.gz -O MCFM-${MCFM_VERSION}.tar.gz && \
     tar xzf MCFM-${MCFM_VERSION}.tar.gz && \
     mv ./gencuts_user.f90 MCFM-${MCFM_VERSION}/src/User/gencuts_user.f90 && \
-    mv ./CollinearW.ini MCFM-${MCFM_VERSION}/Bin/CollinearW.ini && \
     mv ./deltarj.f MCFM-${MCFM_VERSION}/Cuts/deltarj.f && \
     cd MCFM-${MCFM_VERSION}/Bin && \
     cmake -S .. -B . \
@@ -66,6 +64,8 @@ RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERS
       -DCMAKE_Fortran_COMPILER=mpifort \
       -Dwith_vvamp=OFF && \
     cmake --build . -- -j$(($(nproc) - 1))
+
+COPY ./files/Bin /code/MCFM-${MCFM_VERSION}/Bin/
 
 ENV PATH=/code/MCFM-${MCFM_VERSION}/Bin:$PATH
 ENV OMP_STACKSIZE=16000
