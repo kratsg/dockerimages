@@ -147,7 +147,7 @@ submodule (m_gencuts) m_gencuts_user
         if(is_collinear) then
           mindeltarlepjet = 100._dp
           do ijet=1,njets
-            if(pt(jetindex(ijet)) < 100.0) cycle
+            if(pt(jetindex(ijet), pjet) < 100.0) cycle
             mindeltarlepjet = min(deltarlepjet(leptindex(1),ijet,pjet), mindeltarlepjet)
           enddo
 
