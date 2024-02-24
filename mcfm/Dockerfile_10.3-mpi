@@ -55,6 +55,7 @@ RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERS
     tar xzf MCFM-${MCFM_VERSION}.tar.gz && \
     mv ./gencuts_user.f90 MCFM-${MCFM_VERSION}/src/User/gencuts_user.f90 && \
     mv ./input_CollinearW+.ini MCFM-${MCFM_VERSION}/Bin/input_CollinearW+.ini && \
+    mv ./deltarj.f MCFM-${MCFM_VERSION}/Cuts/deltarj.f && \
     cd MCFM-${MCFM_VERSION}/Bin && \
     cmake -S .. -B . \
       -Duse_internal_lhapdf=OFF \

@@ -31,29 +31,6 @@ submodule (m_gencuts) m_gencuts_user
 
     end function
 
-    ! note that pjet has mxpart entries
-    module function deltarlepjet(ilep,ijet,pjet)
-      use types
-      implicit none
-      include 'constants.f'
-      include 'nf.f'
-      include 'mxpart.f'
-      include 'cplx.h'
-      real(dp):: pjet(mxpart,4),phi1,phi2,yrap,dphi
-
-      real(dp):: deltarlepjet
-      integer:: ilep,ijet
-
-      phi1=atan2(pjet(ilep,1),pjet(ilep,2))
-      phi2=atan2(pjet(ijet,1),pjet(ijet,2))
-      dphi=phi1-phi2
-      if (dphi > pi) dphi=twopi-dphi
-      if (dphi < -pi) dphi=twopi+dphi
-      deltarlepjet=(yrap(ilep,pjet)-yrap(ijet,pjet))**2+dphi**2
-      deltarlepjet=sqrt(deltarlepjet)
-      return
-    end function deltarlepjet
-
     module function gencuts_user(pjet, njets)
       use types
       implicit none
@@ -78,8 +55,8 @@ submodule (m_gencuts) m_gencuts_user
       real(dp) :: etall,yll, ptll, pttwo
 
       real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
-      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton
-      integer :: countlept, jetindex(mxpart), leptindex(mxpart)
+      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton, is_hadronic, usescet
+      integer :: countjet, countlept, jetindex(mxpart), leptindex(mxpart)
       integer :: j,ijet
 
       ! implement your own cuts here
@@ -90,6 +67,7 @@ submodule (m_gencuts) m_gencuts_user
 
       if (any((/is_inclusive, is_inclusive2j, is_collinear/))) then
 
+        ! identify the leptons
         countlept=0
         do j=3,mxpart
           if (is_lepton(j)) then
@@ -98,7 +76,22 @@ submodule (m_gencuts) m_gencuts_user
           endif
         enddo
 
-        write(6,*) 'giordon = ',countlept
+        ! identify the jets
+        countjet=0
+        do j=3,mxpart
+          if (is_hadronic(j)) then
+            countjet=countjet+1
+            jetindex(countjet)=j
+          endif
+        enddo
+
+        ! countjet will pick up the extra 'pp' needed for the real piece,
+        ! therefore we should subtract 1 from this number
+        if (countjet > njets) countjet=countjet-1
+        ! for SCET case, there can be up to two extra jets present
+        if (usescet .and. (countjet > njets)) countjet=countjet-1
+
+        write(6,*) 'after  giordon = ',leptindex(1)
 
         ! number of leptons
         if(countlept /= 1) then
