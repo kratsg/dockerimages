@@ -53,6 +53,33 @@ c--- note that pjet has mxpart entries
       return
       end function deltarlepjet
 
+c--- note that pjet has mxpart entries
+      function deltarwjet(wcandidate,ijet,pjet)
+      implicit none
+      include 'types.f'
+      real(dp):: deltarwjet
+
+      include 'constants.f'
+      include 'nf.f'
+      include 'mxpart.f'
+      include 'cplx.h'
+      integer :: ijet
+      real(dp) :: wcandidate(4), pjet(mxpart,4)
+
+      real(dp) :: phi1,phi2,yrap,yrappure,dphi
+
+      phi1=atan2(wcandidate(1),wcandidate(2))
+      phi2=atan2(pjet(ijet,1),pjet(ijet,2))
+
+      dphi=phi1-phi2
+      if (dphi > pi) dphi=twopi-dphi
+      if (dphi < -pi) dphi=twopi+dphi
+      deltarwjet=(yrappure(wcandidate)-yrap(ijet,pjet))**2+dphi**2
+      deltarwjet=sqrt(deltarwjet)
+      return
+      end function deltarwjet
+
+
 c--- note that p has 20 entries
       function deltarq(i,j,p)
       implicit none

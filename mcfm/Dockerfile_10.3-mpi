@@ -12,8 +12,8 @@ WORKDIR /code
 
 SHELL [ "/bin/bash", "-c" ]
 
-COPY ./files/User/gencuts_user.f90 .
-COPY ./files/Cuts/deltarj.f .
+COPY ./files/User/ ./
+COPY ./files/Cuts/ ./
 
 RUN apt-get -qq -y update && \
     apt-get -qq -y install \
@@ -54,6 +54,7 @@ RUN wget --no-check-certificate https://lhapdf.hepforge.org/downloads/?f=LHAPDF-
 RUN wget --no-check-certificate https://mcfm.fnal.gov/downloads/MCFM-${MCFM_VERSION}.tar.gz -O MCFM-${MCFM_VERSION}.tar.gz && \
     tar xzf MCFM-${MCFM_VERSION}.tar.gz && \
     mv ./gencuts_user.f90 MCFM-${MCFM_VERSION}/src/User/gencuts_user.f90 && \
+    mv ./nplotter_W_new.f90 MCFM-${MCFM_VERSION}/src/User/./nplotter_W_new.f90 && \
     mv ./deltarj.f MCFM-${MCFM_VERSION}/src//Cuts/deltarj.f && \
     cd MCFM-${MCFM_VERSION}/Bin && \
     cmake -S .. -B . \
