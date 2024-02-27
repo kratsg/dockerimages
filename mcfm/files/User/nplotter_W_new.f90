@@ -177,7 +177,6 @@ module nplotter_W
 
           drjetlep = mindeltarlepjet
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
-          write(6,*) 'giordon ptratio = ',ptratio
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then
