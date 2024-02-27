@@ -53,7 +53,7 @@ module nplotter_W
               1.947d0,2.522d0,3.277d0,5d0,10d0],'phistar_atlas')
 
           ! Number of jets with pT>30 GeV
-          histos(5) = plot_setup_uniform(0.0_dp,6.0_dp,1.0_dp,'njets')
+          histos(5) = plot_setup_uniform(-0.5_dp,6.5_dp,1.0_dp,'njets')
 
           ! Leading jet transverse momentum
           histos(6) = plot_setup_custom([500.0_dp,550.0_dp,600.0_dp,700.0_dp, &
@@ -65,7 +65,7 @@ module nplotter_W
                                         2200.0_dp,2400.0_dp,2600.0_dp,2800.0_dp,3000.0_dp] ,'ht')
 
           ! Minimum separation between jet (pt>100) and lepton
-          histos(8) = plot_setup_uniform(0.4d0,4.0d0,20.0d0,'drjetlep')
+          histos(8) = plot_setup_uniform(0.4_dp,4.0_dp,0.18_dp,'drjetlep')
 
           ! Lepton + neutrino transverse momentum
           histos(9) = plot_setup_custom([0.0_dp,100.0_dp,200.0_dp,300.0_dp,400.0_dp,500.0_dp, &
@@ -118,7 +118,7 @@ module nplotter_W
           real(dp) :: phistar, phiacop, costhetastar, delphi34
 
           integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart),neutrinoindex(mxpart)
-          integer :: j,njets,ijet,ijetmindeltar
+          integer :: j,ijet,ijetmindeltar
           real(dp) :: pjk(4), wcandidate(4)
 
           pt34 = pttwo(3,4,p)
@@ -127,27 +127,24 @@ module nplotter_W
           costhetastar = tanh((etarap(3,p)-etarap(4,p))/2._dp)
           phistar = tan(phiacop/2._dp)*sin(acos(costhetastar))
 
-          ! Colinear variables
+          ! identify the leptons, jets, neutrinos
+          countjet=0
           countlept=0
           countneutrino=0
           do j=3,mxpart
             if (is_lepton(j)) then
               countlept=countlept+1
               leptindex(countlept)=j
-            endif
-            if(is_neutrino(j)) then
+            elseif (is_hadronic(j)) then
+              countjet=countjet+1
+              jetindex(countjet)=j
+            elseif (is_neutrino(j)) then
+              countneutrino=countneutrino+1
               neutrinoindex(countneutrino)=j
             endif
           enddo
 
-          ! identify the jets
-          countjet=0
-          do j=3,mxpart
-            if (is_hadronic(j)) then
-              countjet=countjet+1
-              jetindex(countjet)=j
-            endif
-          enddo
+          ! TODO: Check Njets/countjet with the extra pp or not
           njets = countjet
 
           wcandidate(:) = p(neutrinoindex(1),:) + p(leptindex(1),:)
@@ -180,6 +177,7 @@ module nplotter_W
 
           drjetlep = mindeltarlepjet
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
+          write(6,*) 'giordon ptratio = ',ptratio
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then

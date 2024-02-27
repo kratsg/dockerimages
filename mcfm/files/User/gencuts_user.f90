@@ -56,9 +56,12 @@ submodule (m_gencuts) m_gencuts_user
       real(dp) :: etall,yll, ptll, pttwo
 
       real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
-      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton, is_hadronic
-      integer :: countjet, countlept, jetindex(mxpart), leptindex(mxpart)
+      logical :: is_inclusive, is_inclusive2j, is_collinear, is_lepton, is_hadronic, is_neutrino
+      integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart), neutrinoindex(mxpart)
       integer :: j,ijet
+      real(dp) :: deltarwjet, mindeltarwjet, value_deltarwjet, ptratio, ptpure, wpt
+      integer :: ijetmindeltar
+      real(dp) :: wcandidate(4)
 
       ! implement your own cuts here
 
@@ -68,21 +71,20 @@ submodule (m_gencuts) m_gencuts_user
 
       if (any((/is_inclusive, is_inclusive2j, is_collinear/))) then
 
-        ! identify the leptons
+        ! identify the leptons, jets, neutrinos
+        countjet=0
         countlept=0
+        countneutrino=0
         do j=3,mxpart
           if (is_lepton(j)) then
             countlept=countlept+1
             leptindex(countlept)=j
-          endif
-        enddo
-
-        ! identify the jets
-        countjet=0
-        do j=3,mxpart
-          if (is_hadronic(j)) then
+          elseif (is_hadronic(j)) then
             countjet=countjet+1
             jetindex(countjet)=j
+          elseif (is_neutrino(j)) then
+            countneutrino=countneutrino+1
+            neutrinoindex(countneutrino)=j
           endif
         enddo
 
@@ -131,6 +133,21 @@ submodule (m_gencuts) m_gencuts_user
             return
           endif
         enddo
+
+        wcandidate(:) = pjet(neutrinoindex(1),:) + pjet(leptindex(1),:)
+        wpt = ptpure(wcandidate)
+
+        ptratio = 0._dp
+        mindeltarwjet = 100._dp
+        do ijet=1,njets
+          if(pt(jetindex(ijet), pjet) < 30.0) cycle
+          value_deltarwjet = deltarwjet(wcandidate,jetindex(ijet),pjet)
+          if (value_deltarwjet < mindeltarwjet) then
+              ijetmindeltar = ijet
+              mindeltarwjet = value_deltarwjet
+          endif
+        enddo
+        ptratio = wpt / pt(jetindex(ijetmindeltar), pjet)
 
         ! inclusive-2j selection
         if(is_inclusive2j) then
