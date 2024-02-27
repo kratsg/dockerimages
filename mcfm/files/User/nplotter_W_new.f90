@@ -57,7 +57,7 @@ module nplotter_W
 
           ! Leading jet transverse momentum
           histos(6) = plot_setup_custom([500.0_dp,550.0_dp,600.0_dp,700.0_dp, &
-                                         800.0_dp,900.0_dp,1000.0_dp,1250.0_dp,1500.0_dp],'ptj1')
+                                         800.0_dp,900.0_dp,1000.0_dp,1250.0_dp,1500.0_dp,1750.0_dp],'ptj1')
 
           ! Scalar sum of all jet momenta
           histos(7) = plot_setup_custom([500.0_dp,600.0_dp,700.0_dp,800.0_dp,900.0_dp,1000.0_dp,&
@@ -65,18 +65,16 @@ module nplotter_W
                                         2200.0_dp,2400.0_dp,2600.0_dp,2800.0_dp,3000.0_dp] ,'ht')
 
           ! Minimum separation between jet (pt>100) and lepton
-          histos(8) = plot_setup_uniform(0.4_dp,4.0_dp,0.18_dp,'drjetlep')
+          histos(8) = plot_setup_uniform(0.4_dp,4.18_dp,0.18_dp,'drjetlep')
 
           ! Lepton + neutrino transverse momentum
           histos(9) = plot_setup_custom([0.0_dp,100.0_dp,200.0_dp,300.0_dp,400.0_dp,500.0_dp, &
-                                         600.0_dp,700.0_dp,800.0_dp,1000.0_dp,1500.0_dp],'wpt')
+                                         600.0_dp,700.0_dp,800.0_dp,1000.0_dp,1500.0_dp,2000.0_dp],'wpt')
 
           ! Leading and sub-leading jet mass
           histos(10) = plot_setup_custom([0.0_dp,200.0_dp,400.0_dp,600.0_dp,800.0_dp,1000.0_dp, &
                                          1200.0_dp,1400.0_dp,1600.0_dp,1800.0_dp,2000.0_dp, &
-                                         2250.0_dp,2500.0_dp,3000.0_dp,3500.0_dp,4000.0_dp], 'mjj')
-
-
+                                         2250.0_dp,2500.0_dp,3000.0_dp,3500.0_dp,4000.0_dp,4500.0_dp], 'mjj')
 
           ! ratio of: Wpt / closest jet pT
           histos(11) = plot_setup_custom([0.00_dp,0.08_dp,0.16_dp,0.24_dp,0.32_dp, &
@@ -85,6 +83,7 @@ module nplotter_W
                                           1.00_dp,1.04_dp,1.08_dp,1.12_dp,1.16_dp, &
                                           1.20_dp,1.28_dp,1.36_dp,1.44_dp,1.52_dp, &
                                           1.60_dp,1.68_dp,1.76_dp,1.84_dp,1.92_dp,2.0_dp], 'ptratio')
+
       end subroutine
 
       subroutine book(p,wt,ids,vals,wts)
