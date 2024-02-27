@@ -197,6 +197,10 @@ module nplotter_W
               phistar = -1._dp
           endif
 
+          if (ieee_is_nan(mjj)) then
+              mjj = -1._dp
+          endif
+
           ids = histos
           vals = [pt34,pt34,pt34,phistar,real(njets,dp),ptj1,ht,drjetlep,wpt,mjj,ptratio]
           wts = [wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans]
