@@ -7,14 +7,14 @@
 #SBATCH --constraint=cpu
 #SBATCH --job-name=mcfm-collinearw
 #SBATCH --nodes=6
-#SBATCH --ntasks-per-node=16
-#SBATCH --cpus-per-task=16
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=256
 #SBATCH --mail-user=gistark@ucsc.edu
 #SBATCH --mail-type=ALL
 #SBATCH -t 00:30:00
 
 export OMP_STACKSIZE=512000
-export OMP_NUM_THREADS=64
+export OMP_NUM_THREADS=256
 export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
