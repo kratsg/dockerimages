@@ -11,7 +11,7 @@
 #SBATCH --cpus-per-task=256
 #SBATCH --mail-user=gistark@ucsc.edu
 #SBATCH --mail-type=ALL
-#SBATCH -t 00:30:00
+#SBATCH -t 12:00:00
 
 export OMP_STACKSIZE=512000
 export OMP_NUM_THREADS=256
@@ -23,5 +23,5 @@ srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm Colline
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_collinear
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=11 -general%runstring=Wp_inclusive
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_inclusive
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=11 -general%runstring=Wp_inclusive2j 
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=11 -general%runstring=Wp_inclusive2j
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_inclusive2j
