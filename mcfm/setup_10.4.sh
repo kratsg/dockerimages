@@ -1,8 +1,8 @@
 module load python/3.11
 
-cp files/Cuts/* MCFM-10.4-pre/src/Cuts/.
-cp files/User/* MCFM-10.4-pre/src/User/.
-cp files/Bin/CollinearW* MCFM-10.4-pre/Bin/.
+rsync -ravz files/Cuts/ MCFM-10.4-pre/src/Cuts/
+rsync -ravz files/User/ MCFM-10.4-pre/src/User/
+rsync -ravz files/Bin/ MCFM-10.4-pre/Bin/
 cd MCFM-10.4-pre/Bin
 
 # to configure for compile
