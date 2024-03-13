@@ -88,12 +88,6 @@ submodule (m_gencuts) m_gencuts_user
           endif
         enddo
 
-        ! countjet will pick up the extra 'pp' needed for the real piece,
-        ! therefore we should subtract 1 from this number
-        if (countjet > njets) countjet=countjet-1
-        ! for SCET case, there can be up to two extra jets present
-        if (usescet .and. (countjet > njets)) countjet=countjet-1
-
         ! number of leptons
         if(countlept /= 1) then
           gencuts_user=.true.

@@ -100,7 +100,7 @@ module nplotter_W
           include 'leptcuts.f'
           include 'jetcuts.f'
           include 'taucut.f'! abovecut
-
+          include 'jetlabel.f'! correct njets
 
           logical:: is_lepton,is_photon,is_hadronic,is_neutrino
 
@@ -143,8 +143,8 @@ module nplotter_W
             endif
           enddo
 
-          ! TODO: Check Njets/countjet with the extra pp or not
-          njets = countjet
+          ! get number of jets from jetlabel.f
+          njets = jets
 
           wcandidate(:) = p(neutrinoindex(1),:) + p(leptindex(1),:)
           wpt = ptpure(wcandidate)
