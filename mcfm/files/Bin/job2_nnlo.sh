@@ -5,7 +5,7 @@
 #SBATCH --account=m2616
 #SBATCH --qos=regular
 #SBATCH --constraint=cpu
-#SBATCH --job-name=mcfm-collinearw
+#SBATCH --job-name=mcfm-nnlo
 #SBATCH --nodes=128
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=256
