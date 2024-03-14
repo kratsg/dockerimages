@@ -19,4 +19,4 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
 # see: https://stackoverflow.com/a/53759961
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo_v3 -general%nproc=11 -general%runstring=Wp_inclusive2j -nnlo%taucut=0.01
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo_v3 -general%nproc=11 -general%runstring=Wp_inclusive2j -nnlo%taucut=0.01 -integration%precisiongoal=0.0001
