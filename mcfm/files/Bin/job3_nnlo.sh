@@ -6,7 +6,7 @@
 #SBATCH --qos=regular
 #SBATCH --constraint=cpu
 #SBATCH --job-name=mcfm-collinearw
-#SBATCH --nodes=64
+#SBATCH --nodes=128
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=256
 #SBATCH --mail-user=gistark@ucsc.edu

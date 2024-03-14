@@ -6,12 +6,12 @@
 #SBATCH --qos=regular
 #SBATCH --constraint=cpu
 #SBATCH --job-name=mcfm-collinearw
-#SBATCH --nodes=8
+#SBATCH --nodes=32
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=256
 #SBATCH --mail-user=gistark@ucsc.edu
 #SBATCH --mail-type=ALL
-#SBATCH -t 12:00:00
+#SBATCH -t 24:00:00
 
 export OMP_STACKSIZE=512000
 export OMP_NUM_THREADS=256
