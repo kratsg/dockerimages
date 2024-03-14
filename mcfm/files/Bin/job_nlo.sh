@@ -19,9 +19,9 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
 # see: https://stackoverflow.com/a/53759961
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo_v3 -general%nproc=11 -general%runstring=Wp_collinear -integration%precisiongoal=0.0001
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo_v3 -general%nproc=16 -general%runstring=Wm_collinear -integration%precisiongoal=0.0001
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo_v3 -general%nproc=11 -general%runstring=Wp_inclusive -integration%precisiongoal=0.0001
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo_v3 -general%nproc=16 -general%runstring=Wm_inclusive -integration%precisiongoal=0.0001
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo_v3 -general%nproc=11 -general%runstring=Wp_inclusive2j -integration%precisiongoal=0.0001
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo_v3 -general%nproc=16 -general%runstring=Wm_inclusive2j -integration%precisiongoal=0.0001
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=11 -general%runstring=Wp_collinear -integration%precisiongoal=0.0001
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=16 -general%runstring=Wm_collinear -integration%precisiongoal=0.0001
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=11 -general%runstring=Wp_inclusive -integration%precisiongoal=0.0001
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=16 -general%runstring=Wm_inclusive -integration%precisiongoal=0.0001
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=11 -general%runstring=Wp_inclusive2j -integration%precisiongoal=0.0001
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=16 -general%runstring=Wm_inclusive2j -integration%precisiongoal=0.0001
