@@ -111,9 +111,9 @@ module nplotter_W
           real(dp), allocatable, intent(out) :: vals(:)
           real(dp), allocatable, intent(out) :: wts(:)
 
-          real(dp) :: pt, pttwo, puremass, twomass, delphi, etarap, ptpure, deltarlepjet, deltarwjet
+          real(dp) :: pt, pttwo, puremass, twomass, delphi, etarap, ptpure, deltarlepjet, deltaphiwjet
 
-          real(dp) :: pt34, ptj1, drjetlep, wpt, ht, mjj, mindeltarlepjet, value_deltarwjet, mindeltarwjet, ptratio, trans
+          real(dp) :: pt34, ptj1, drjetlep, wpt, ht, mjj, mindeltarlepjet, value_deltaphiwjet, mindeltaphiwjet, ptratio, trans
           real(dp) :: phistar, phiacop, costhetastar, delphi34
 
           integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart),neutrinoindex(mxpart)
@@ -160,17 +160,17 @@ module nplotter_W
           ht = 0._dp
           ptratio = 0._dp
           mindeltarlepjet = 100._dp
-          mindeltarwjet = 100._dp
+          mindeltaphiwjet = 100._dp
           do ijet=1,njets
             if(pt(jetindex(ijet), p) < 30.0) cycle
             ht = ht + pt(jetindex(ijet),p)
             if(pt(jetindex(ijet), p) < 100.0) cycle
             mindeltarlepjet = min(deltarlepjet(leptindex(1),jetindex(ijet),p), mindeltarlepjet)
 
-            value_deltarwjet = deltarwjet(wcandidate,jetindex(ijet),p)
-            if (value_deltarwjet < mindeltarwjet) then
+            value_deltaphiwjet = deltaphiwjet(wcandidate,jetindex(ijet),p)
+            if (value_deltaphiwjet < mindeltaphiwjet) then
                 ijetmindeltar = ijet
-                mindeltarwjet = value_deltarwjet
+                mindeltaphiwjet = value_deltaphiwjet
             endif
           enddo
 
