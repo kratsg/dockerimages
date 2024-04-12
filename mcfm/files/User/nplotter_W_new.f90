@@ -135,8 +135,8 @@ module nplotter_W
               countlept=countlept+1
               leptindex(countlept)=j
             elseif (is_hadronic(j)) then
-              if(pt(jetindex(j),pjet) < 30.0 .or. aetrarap(jetindex(j),pjet) > 2.5) then
-                write (*,*) "FAILING JET", pt(jetindex(j),pjet), aetrarap(jetindex(j),pjet)
+              if(pt(j,p) < 30.0 .or. aetrarap(j,p) > 2.5) then
+                write (*,*) "FAILING JET", pt(j,p), aetrarap(j,p)
                 cycle
               endif
               countjet=countjet+1
@@ -150,7 +150,7 @@ module nplotter_W
           ! get number of jets from jetlabel.f
           njets = 0
           do j=1,jets
-            if(pt(jetindex(j),pjet) < 30.0 .or. aetrarap(jetindex(j),pjet) > 2.5) cycle
+            if(pt(jetindex(j),p) < 30.0 .or. aetrarap(jetindex(j),p) > 2.5) cycle
             njets=njets+1
           enddo
 
