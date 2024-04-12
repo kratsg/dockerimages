@@ -111,7 +111,7 @@ module nplotter_W
           real(dp), allocatable, intent(out) :: vals(:)
           real(dp), allocatable, intent(out) :: wts(:)
 
-          real(dp) :: pt, pttwo, puremass, twomass, delphi, etarap, ptpure, deltarlepjet, deltaphiwjet
+          real(dp) :: pt, pttwo, puremass, twomass, delphi, etarap, ptpure, deltarlepjet, deltaphiwjet, aetarap
 
           real(dp) :: pt34, ptj1, drjetlep, wpt, ht, mjj, mindeltarlepjet, value_deltaphiwjet, mindeltaphiwjet, ptratio, trans
           real(dp) :: phistar, phiacop, costhetastar, delphi34
@@ -135,8 +135,8 @@ module nplotter_W
               countlept=countlept+1
               leptindex(countlept)=j
             elseif (is_hadronic(j)) then
-              if(pt(j,p) < 30.0 .or. aetrarap(j,p) > 2.5) then
-                write (*,*) "FAILING JET", pt(j,p), aetrarap(j,p)
+              if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) then
+                write (*,*) "FAILING JET", pt(j,p), aetarap(j,p)
                 cycle
               endif
               countjet=countjet+1
@@ -150,7 +150,7 @@ module nplotter_W
           ! get number of jets from jetlabel.f
           njets = 0
           do j=1,jets
-            if(pt(jetindex(j),p) < 30.0 .or. aetrarap(jetindex(j),p) > 2.5) cycle
+            if(pt(jetindex(j),p) < 30.0 .or. aetarap(jetindex(j),p) > 2.5) cycle
             njets=njets+1
           enddo
 
