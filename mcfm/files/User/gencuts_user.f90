@@ -149,7 +149,7 @@ submodule (m_gencuts) m_gencuts_user
           if(njets < 2) then
             gencuts_user=.true.
             return
-          elseif(pt(jetindex(2),pjet) < 30.0 .or. aetrarap(jetindex(2),pjet) > 2.5) then
+          elseif(pt(jetindex(2),pjet) < 30.0 .or. aetarap(jetindex(2),pjet) > 2.5) then
             gencuts_user=.true.
             return
           endif
