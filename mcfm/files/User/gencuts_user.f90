@@ -134,10 +134,7 @@ submodule (m_gencuts) m_gencuts_user
         ptratio = 0._dp
         mindeltarwjet = 100._dp
         do ijet=1,njets
-          if(pt(jetindex(ijet),pjet) < 30.0 .or. aetarap(jetindex(ijet),pjet) > 2.5)  then
-            gencuts_user=.true.
-            return
-          endif
+          if(aetarap(jetindex(ijet),pjet) > 2.5) cycle
           if(pt(jetindex(ijet), pjet) < 100.0) cycle
           value_deltarwjet = deltarwjet(wcandidate,jetindex(ijet),pjet)
           if (value_deltarwjet < mindeltarwjet) then
@@ -148,9 +145,14 @@ submodule (m_gencuts) m_gencuts_user
         ptratio = wpt / pt(jetindex(ijetmindeltar), pjet)
 
         ! inclusive-2j selection
-        if(is_inclusive2j .and. njets < 2) then
-          gencuts_user=.true.
-          return
+        if(is_inclusive2j) then
+          if(njets < 2) then
+            gencuts_user=.true.
+            return
+          elseif(pt(jetindex(2),pjet) < 30.0 .or. aetrarap(jetindex(2),pjet) > 2.5) then
+            gencuts_user=.true.
+            return
+          endif
         endif
 
         ! collinear selection
