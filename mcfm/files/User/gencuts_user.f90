@@ -79,12 +79,19 @@ submodule (m_gencuts) m_gencuts_user
           if (is_lepton(j)) then
             countlept=countlept+1
             leptindex(countlept)=j
-          elseif (is_hadronic(j)) then
-            countjet=countjet+1
-            jetindex(countjet)=j
           elseif (is_neutrino(j)) then
             countneutrino=countneutrino+1
             neutrinoindex(countneutrino)=j
+          endif
+        enddo
+
+        ! filter out jets that are overlapping with the lepton
+        ! angular separation of leptons and jets (prefer lepton)
+        do j=3,mxpart
+          if (is_hadronic(j)) then
+            if(deltarlepjet(leptindex(1),j,pjet) < 0.4) cycle
+            countjet=countjet+1
+            jetindex(countjet)=j
           endif
         enddo
 
@@ -119,14 +126,6 @@ submodule (m_gencuts) m_gencuts_user
           gencuts_user=.true.
           return
         endif
-
-        ! angular separation of leptons and jets
-        do ijet=1,njets
-          if(deltarlepjet(leptindex(1),jetindex(ijet),pjet) < 0.4) then
-            gencuts_user=.true.
-            return
-          endif
-        enddo
 
         wcandidate(:) = pjet(neutrinoindex(1),:) + pjet(leptindex(1),:)
         wpt = ptpure(wcandidate)

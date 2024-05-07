@@ -144,6 +144,18 @@ module nplotter_W
             endif
           enddo
 
+        ! filter out jets that are overlapping with the lepton
+        ! angular separation of leptons and jets (prefer lepton)
+        do j=3,mxpart
+          if (is_hadronic(j)) then
+            if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
+            if(deltarlepjet(leptindex(1),j,p) < 0.4) cycle
+            countjet=countjet+1
+            jetindex(countjet)=j
+          endif
+        enddo
+
+
           ! get number of jets from jetlabel.f
           njets = 0
           do j=1,jets
