@@ -19,4 +19,4 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
 # see: https://stackoverflow.com/a/53759961
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=nnlocoeff -general%rundir=collinearW_nnlocoeff -general%nproc=11 -general%runstring=Wp_collinear
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_collinear
