@@ -12,7 +12,7 @@ RUN yum clean expire-cache && \
     yum install -y libffi-devel openssl-devel && \
     yum install -y cpp gcc && \
     yum install -y python3 python3-devel voms-clients && \
-    yum install -y ca-policy-egi-core wlcg-voms-atlas && \
+    yum install -y ca-policy-egi-core wlcg-iam-vomses-atlas wlcg-iam-lsc-atlas && \
     yum install -y git && \
     yum clean all && \
     rm -rf /var/cache/yum && \
