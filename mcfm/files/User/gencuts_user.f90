@@ -172,11 +172,11 @@ submodule (m_gencuts) m_gencuts_user
       endif ! runstring in ["inclusive", "inclusive2j", "collinear"]
 
       ! this performs cuts based on cuts%y34min and cuts%y34max from the input file
-      yll = abs(yraptwo(3,4,pjet))
-      if (yll < y34min .or. yll > y34max) then
-          gencuts_user = .true.
-          return
-      endif
+      ! yll = abs(yraptwo(3,4,pjet))
+      ! if (yll < y34min .or. yll > y34max) then
+      !     gencuts_user = .true.
+      !     return
+      ! endif
 
       gencuts_user = .false.
       return
