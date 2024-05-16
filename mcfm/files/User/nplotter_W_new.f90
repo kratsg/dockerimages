@@ -133,33 +133,28 @@ module nplotter_W
           do j=3,mxpart
             if (is_lepton(j)) then
               countlept=countlept+1
-              leptindex(countlept)=j
-            elseif (is_hadronic(j)) then
-              ! handled by existing config: ptjetmin, etajetmax
-              ! if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
-              countjet=countjet+1
-              jetindex(countjet)=j
             elseif (is_neutrino(j)) then
               countneutrino=countneutrino+1
               neutrinoindex(countneutrino)=j
             endif
           enddo
 
-        ! filter out jets that are overlapping with the lepton
-        ! angular separation of leptons and jets (prefer lepton)
-        do j=3,mxpart
-          if (is_hadronic(j)) then
-            ! handled by existing config: ptjetmin, etajetmax
-            ! if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
-            if(deltarlepjet(leptindex(1),j,p) < 0.4) cycle
-            countjet=countjet+1
-            jetindex(countjet)=j
-          endif
-        enddo
+          ! filter out jets that are overlapping with the lepton
+          ! angular separation of leptons and jets (prefer lepton)
+          do j=3,mxpart
+            if (is_hadronic(j)) then
+              ! handled by existing config: ptjetmin, etajetmax
+              ! if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
+              if(deltarlepjet(leptindex(1),j,p) < 0.4) cycle
+              countjet=countjet+1
+              jetindex(countjet)=j
+            endif
+          enddo
 
+          njets = countjet
 
           ! get number of jets from jetlabel.f
-          njets = jets
+          ! njets = 0
           ! handled by existing config: ptjetmin, etajetmax
           ! do j=1,jets
           !   if(pt(jetindex(j),p) < 30.0 .or. aetarap(jetindex(j),p) > 2.5) cycle
