@@ -151,8 +151,6 @@ module nplotter_W
             endif
           enddo
 
-          njets = countjet
-
           ! get number of jets from jetlabel.f
           ! njets = 0
           ! handled by existing config: ptjetmin, etajetmax
@@ -167,7 +165,7 @@ module nplotter_W
           ptj1 = pt(jetindex(1),p)
 
           mjj = 0._dp
-          if(njets > 1) then
+          if(countjet > 1) then
             pjk(:) = p(jetindex(1),:) + p(jetindex(2),:)
             mjj = puremass(pjk)
           endif
@@ -176,7 +174,7 @@ module nplotter_W
           ptratio = 0._dp
           mindeltarlepjet = 100._dp
           mindeltaphiwjet = 100._dp
-          do ijet=1,njets
+          do ijet=1,countjet
             if(pt(jetindex(ijet), p) < 30.0) cycle
             ht = ht + pt(jetindex(ijet),p)
             if(pt(jetindex(ijet), p) < 100.0) cycle
@@ -216,7 +214,7 @@ module nplotter_W
           endif
 
           ids = histos
-          vals = [pt34,pt34,pt34,phistar,real(njets,dp),ptj1,ht,drjetlep,wpt,mjj,ptratio]
+          vals = [pt34,pt34,pt34,phistar,real(countjet,dp),ptj1,ht,drjetlep,wpt,mjj,ptratio]
           wts = [wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans]
 
       end subroutine

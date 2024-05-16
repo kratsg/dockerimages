@@ -116,7 +116,7 @@ submodule (m_gencuts) m_gencuts_user
         ! endif
 
         ! number of jets
-        if (njets == 0) then
+        if (countjet == 0) then
           gencuts_user=.true.
           return
         endif
@@ -132,7 +132,7 @@ submodule (m_gencuts) m_gencuts_user
 
         ptratio = 0._dp
         mindeltarwjet = 100._dp
-        do ijet=1,njets
+        do ijet=1,countjet
           ! handled by existing config: etajetmax
           ! if(aetarap(jetindex(ijet),pjet) > 2.5) cycle
           if(pt(jetindex(ijet), pjet) < 100.0) cycle
@@ -146,7 +146,7 @@ submodule (m_gencuts) m_gencuts_user
 
         ! inclusive-2j selection
         if(is_inclusive2j) then
-          if(njets < 2) then
+          if(countjet < 2) then
             gencuts_user=.true.
             return
           elseif(pt(jetindex(2),pjet) < 30.0 .or. aetarap(jetindex(2),pjet) > 2.5) then
@@ -158,7 +158,7 @@ submodule (m_gencuts) m_gencuts_user
         ! collinear selection
         if(is_collinear) then
           mindeltarlepjet = 100._dp
-          do ijet=1,njets
+          do ijet=1,countjet
             if(pt(jetindex(ijet), pjet) < 100.0) cycle
             mindeltarlepjet = min(deltarlepjet(leptindex(1),jetindex(ijet),pjet), mindeltarlepjet)
           enddo
