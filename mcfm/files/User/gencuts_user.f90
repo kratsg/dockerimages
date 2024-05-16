@@ -130,10 +130,9 @@ submodule (m_gencuts) m_gencuts_user
         ptratio = wpt / pt(jetindex(ijetmindeltar), pjet)
 
         ! inclusive-2j selection
-        if(is_inclusive2j) then
-          if(countjet < 2) then
-            gencuts_user=.true.
-            return
+        if(is_inclusive2j .and. countjet < 2) then
+          gencuts_user=.true.
+          return
         endif
 
         ! collinear/backtoback selection
