@@ -103,10 +103,10 @@ submodule (m_gencuts) m_gencuts_user
 
         ! lepton momentum
         ! handled by existing config: ptleptmin
-        if(pt(leptindex(1),pjet) < leptptmin) then
-          gencuts_user=.true.
-          return
-        endif
+        ! if(pt(leptindex(1),pjet) < leptptmin) then
+        !   gencuts_user=.true.
+        !   return
+        ! endif
 
         ! lepton pseudorapidity
         ! handled by existing config: etaleptmax
@@ -133,7 +133,8 @@ submodule (m_gencuts) m_gencuts_user
         ptratio = 0._dp
         mindeltarwjet = 100._dp
         do ijet=1,njets
-          if(aetarap(jetindex(ijet),pjet) > 2.5) cycle
+          ! handled by existing config: etajetmax
+          ! if(aetarap(jetindex(ijet),pjet) > 2.5) cycle
           if(pt(jetindex(ijet), pjet) < 100.0) cycle
           value_deltarwjet = deltarwjet(wcandidate,jetindex(ijet),pjet)
           if (value_deltarwjet < mindeltarwjet) then
