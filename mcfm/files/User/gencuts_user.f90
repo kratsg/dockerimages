@@ -101,20 +101,6 @@ submodule (m_gencuts) m_gencuts_user
           return
         endif
 
-        ! lepton momentum
-        ! handled by existing config: ptleptmin
-        ! if(pt(leptindex(1),pjet) < leptptmin) then
-        !   gencuts_user=.true.
-        !   return
-        ! endif
-
-        ! lepton pseudorapidity
-        ! handled by existing config: etaleptmax
-        ! if (aetarap(leptindex(1),pjet) > 2.5) then
-        !   gencuts_user=.true.
-        !   return
-        ! endif
-
         ! number of jets
         if (countjet == 0) then
           gencuts_user=.true.
@@ -133,8 +119,6 @@ submodule (m_gencuts) m_gencuts_user
         ptratio = 0._dp
         mindeltarwjet = 100._dp
         do ijet=1,countjet
-          ! handled by existing config: etajetmax
-          ! if(aetarap(jetindex(ijet),pjet) > 2.5) cycle
           if(pt(jetindex(ijet), pjet) < 100.0) cycle
           value_deltarwjet = deltarwjet(wcandidate,jetindex(ijet),pjet)
           if (value_deltarwjet < mindeltarwjet) then
@@ -149,10 +133,6 @@ submodule (m_gencuts) m_gencuts_user
           if(countjet < 2) then
             gencuts_user=.true.
             return
-          elseif(pt(jetindex(2),pjet) < 30.0 .or. aetarap(jetindex(2),pjet) > 2.5) then
-            gencuts_user=.true.
-            return
-          endif
         endif
 
         ! collinear selection
@@ -171,124 +151,8 @@ submodule (m_gencuts) m_gencuts_user
 
       endif ! runstring in ["inclusive", "inclusive2j", "collinear"]
 
-      ! this performs cuts based on cuts%y34min and cuts%y34max from the input file
-      ! yll = abs(yraptwo(3,4,pjet))
-      ! if (yll < y34min .or. yll > y34max) then
-      !     gencuts_user = .true.
-      !     return
-      ! endif
-
       gencuts_user = .false.
       return
-
-      ! Example for a rapidity cut on the particle 3,4 system:
-
-      !yll = abs(yraptwo(3,4,pjet))
-      !if (yll < y34min .or. yll > y34max) then
-          !gencuts_user = .true.
-          !return
-      !endif
-
-      ! example cuts which are enabled based on the input file runstring
-
-!     if (trim(runstring) == "Z_atlas_8tev") then
-!         yll = yraptwo(3,4,pjet)
-!         if (yll < -2.4d0 .or. yll > 2.4d0) then
-!             gencuts_user = .true.
-!             return
-!         endif
-!     elseif (trim(runstring) == "Z_cms_7tev") then
-!         return
-!     elseif (trim(runstring) == "Z_cms_13tev") then
-!         yll = yraptwo(3,4,pjet)
-!         if (yll < -2.4d0 .or. yll > 2.4d0) then
-!             gencuts_user = .true.
-!             return
-!         endif
-!     elseif (trim(runstring) == "Higgs") then
-!         yll = yraptwo(3,4,pjet)
-!         if (yll < -2.4d0 .or. yll > 2.4d0) then
-!             gencuts_user = .true.
-!             return
-!         endif
-!     elseif (trim(runstring) == "ZZ") then
-!             mll = puremass(pjet(3,:) + pjet(4,:))
-!             mllga = puremass(pjet(3,:) + pjet(4,:) + pjet(5,:) + pjet(6,:))
-
-!             !if ((mllga > 185d0) .or. (mllga < 179d0)) then
-!                 !gencuts_user = .true.
-!                 !return
-!             !endif
-
-!     elseif (trim(runstring) == "Wm_cms_8tev" .or. trim(runstring) == "Wp_cms_8tev") then
-!         !pt34 = ptpure(pjet(3,:)+pjet(4,:))
-!         !if (pt34 < 30d0) then
-!             !gencuts_user = .true.
-!             !return
-!         !endif
-!     elseif (trim(runstring) == "1211.1913") then
-!         eta3 = ayrap(3,pjet)
-!         eta4 = ayrap(4,pjet)
-
-!         if (eta3 > 1.37d0 .and. eta3 < 1.52d0) then
-!             gencuts_user = .true.
-!             return
-!         endif
-!         if (eta4 > 1.37d0 .and. eta4 < 1.52d0) then
-!             gencuts_user = .true.
-!             return
-!         endif
-
-!     elseif (trim(runstring) == "Zga_atlas_13TeV") then
-!             mll = puremass(pjet(3,:) + pjet(4,:))
-!             mllga = puremass(pjet(3,:) + pjet(4,:) + pjet(5,:))
-
-!             if (mll < 40d0) then
-!                 gencuts_user = .true.
-!                 return
-!             endif
-
-!             if (mll + mllga < 182d0) then
-!                 gencuts_user = .true.
-!                 return
-!             endif
-
-!             mycuts: block
-!                 real(dp) :: delphi, etarap
-!
-!                 real(dp) :: delphi345, phiacop, costhetastar, phistar
-!
-!                 delphi345 = delphi(pjet(3,:)+pjet(4,:), pjet(5,:))
-!
-!                 if (delphi345 > 0.10d0) then
-!                     gencuts_user = .true.
-!                     return
-!                 endif
-!
-!             end block mycuts
-
-!             eta3 = abs(etarappure(pjet(3,:)))
-!             eta4 = abs(etarappure(pjet(4,:)))
-!             eta5 = abs(etarappure(pjet(5,:)))
-
-!             if (eta3 > 1.37d0 .and. eta3 < 1.52d0) then
-!                 gencuts_user = .true.
-!                 return
-!             endif
-
-!             if (eta4 > 1.37d0 .and. eta4 < 1.52d0) then
-!                 gencuts_user = .true.
-!                 return
-!             endif
-
-!             if (eta5 > 1.37d0 .and. eta5 < 1.52d0) then
-!                 gencuts_user = .true.
-!                 return
-!             endif
-!     else
-!         continue
-!         !error stop __FILE__//": gencuts_user unset cuts"
-!     endif
 
     end function
 
