@@ -25,3 +25,5 @@ srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm Colline
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=16 -general%runstring=Wm_inclusive -nnlo%taucut=0.01
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=11 -general%runstring=Wp_inclusive2j -nnlo%taucut=0.01
 srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=16 -general%runstring=Wm_inclusive2j -nnlo%taucut=0.01
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W+' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=11 -general%runstring=Wp_backtoback -nnlo%taucut=0.01
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W-' ./mcfm CollinearW.ini -general%part=nlo -general%rundir=collinearW_nlo -general%nproc=16 -general%runstring=Wm_backtoback -nnlo%taucut=0.01
