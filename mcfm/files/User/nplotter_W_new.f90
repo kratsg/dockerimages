@@ -135,7 +135,8 @@ module nplotter_W
               countlept=countlept+1
               leptindex(countlept)=j
             elseif (is_hadronic(j)) then
-              if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
+              ! handled by existing config: ptjetmin, etajetmax
+              ! if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
               countjet=countjet+1
               jetindex(countjet)=j
             elseif (is_neutrino(j)) then
@@ -148,7 +149,8 @@ module nplotter_W
         ! angular separation of leptons and jets (prefer lepton)
         do j=3,mxpart
           if (is_hadronic(j)) then
-            if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
+            ! handled by existing config: ptjetmin, etajetmax
+            ! if(pt(j,p) < 30.0 .or. aetarap(j,p) > 2.5) cycle
             if(deltarlepjet(leptindex(1),j,p) < 0.4) cycle
             countjet=countjet+1
             jetindex(countjet)=j
@@ -157,11 +159,12 @@ module nplotter_W
 
 
           ! get number of jets from jetlabel.f
-          njets = 0
-          do j=1,jets
-            if(pt(jetindex(j),p) < 30.0 .or. aetarap(jetindex(j),p) > 2.5) cycle
-            njets=njets+1
-          enddo
+          njets = jets
+          ! handled by existing config: ptjetmin, etajetmax
+          ! do j=1,jets
+          !   if(pt(jetindex(j),p) < 30.0 .or. aetarap(jetindex(j),p) > 2.5) cycle
+          !   njets=njets+1
+          ! enddo
 
           wcandidate(:) = p(neutrinoindex(1),:) + p(leptindex(1),:)
           wpt = ptpure(wcandidate)
