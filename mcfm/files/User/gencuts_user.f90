@@ -68,8 +68,9 @@ submodule (m_gencuts) m_gencuts_user
       is_inclusive2j = index(runstring, "inclusive2j") /= 0
       is_inclusive = index(runstring, "inclusive") /= 0 .and. .not. is_inclusive2j
       is_collinear = index(runstring, "collinear") /= 0
+      is_back2back = index(runstring, "back2back") /= 0
 
-      if (any((/is_inclusive, is_inclusive2j, is_collinear/))) then
+      if (any((/is_inclusive, is_inclusive2j, is_collinear, is_back2back/))) then
 
         ! identify the leptons, jets, neutrinos
         countjet=0
@@ -135,19 +136,22 @@ submodule (m_gencuts) m_gencuts_user
             return
         endif
 
-        ! collinear selection
-        if(is_collinear) then
+        ! collinear/backtoback selection
+        if(is_collinear .or. is_back2back) then
           mindeltarlepjet = 100._dp
           do ijet=1,countjet
             if(pt(jetindex(ijet), pjet) < 100.0) cycle
             mindeltarlepjet = min(deltarlepjet(leptindex(1),jetindex(ijet),pjet), mindeltarlepjet)
           enddo
 
-          if(mindeltarlepjet > 2.6) then
+          if(is_collinear .and. mindeltarlepjet > 2.6) then
+            gencuts_user=.true.
+            return
+          elseif(is_back2back .and. mindeltarlepjet <= 2.6) then
             gencuts_user=.true.
             return
           endif
-        endif ! collinear
+        endif
 
       endif ! runstring in ["inclusive", "inclusive2j", "collinear"]
 
