@@ -110,10 +110,10 @@ submodule (m_gencuts) m_gencuts_user
 
         ! lepton pseudorapidity
         ! handled by existing config: etaleptmax
-        if (aetarap(leptindex(1),pjet) > 2.4) then
-          gencuts_user=.true.
-          return
-        endif
+        ! if (aetarap(leptindex(1),pjet) > 2.5) then
+        !   gencuts_user=.true.
+        !   return
+        ! endif
 
         ! number of jets
         if (njets == 0) then
