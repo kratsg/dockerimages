@@ -59,9 +59,6 @@ submodule (m_gencuts) m_gencuts_user
       logical :: is_inclusive, is_inclusive2j, is_collinear, is_back2back, is_lepton, is_hadronic, is_neutrino
       integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart), neutrinoindex(mxpart)
       integer :: j,ijet
-      real(dp) :: deltarwjet, mindeltarwjet, value_deltarwjet
-      integer :: ijetmindeltar
-      real(dp) :: wcandidate(4)
 
       ! implement your own cuts here
 
@@ -113,18 +110,6 @@ submodule (m_gencuts) m_gencuts_user
           gencuts_user=.true.
           return
         endif
-
-        wcandidate(:) = pjet(neutrinoindex(1),:) + pjet(leptindex(1),:)
-
-        mindeltarwjet = 100._dp
-        do ijet=1,countjet
-          if(pt(jetindex(ijet), pjet) < 100.0) cycle
-          value_deltarwjet = deltarwjet(wcandidate,jetindex(ijet),pjet)
-          if (value_deltarwjet < mindeltarwjet) then
-            ijetmindeltar = ijet
-            mindeltarwjet = value_deltarwjet
-          endif
-        enddo
 
         ! inclusive-2j selection
         if(is_inclusive2j .and. countjet < 2) then
