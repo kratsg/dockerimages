@@ -23,6 +23,6 @@ srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='collinear W+' ./mc
 srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_collinear &
 srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=11 -general%runstring=Wp_inclusive &
 srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_inclusive &
-srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=11 -general%runstring=Wp_inclusive2j &
-srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_inclusive2j &
+srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=11 -general%runstring=Wp_inclusi2j &
+srun --mpi=cray_shasta --nodes=1 --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=snlo -general%rundir=collinearW_snlo -general%nproc=16 -general%runstring=Wm_inclusi2j &
 wait

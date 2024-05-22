@@ -56,18 +56,18 @@ submodule (m_gencuts) m_gencuts_user
       real(dp) :: etall,yll, ptll, pttwo
 
       real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
-      logical :: is_inclusive, is_inclusive2j, is_collinear, is_back2back, is_lepton, is_hadronic, is_neutrino
+      logical :: is_inclusive, is_inclusi2j, is_collinear, is_back2back, is_lepton, is_hadronic, is_neutrino
       integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart), neutrinoindex(mxpart)
       integer :: j,ijet
 
       ! implement your own cuts here
 
-      is_inclusive2j = index(runstring, "inclusive2j") /= 0
-      is_inclusive = index(runstring, "inclusive") /= 0 .and. .not. is_inclusive2j
+      is_inclusi2j = index(runstring, "inclusi2j") /= 0
+      is_inclusive = index(runstring, "inclusive") /= 0
       is_collinear = index(runstring, "collinear") /= 0
       is_back2back = index(runstring, "backtoback") /= 0
 
-      if (any((/is_inclusive, is_inclusive2j, is_collinear, is_back2back/))) then
+      if (any((/is_inclusive, is_inclusi2j, is_collinear, is_back2back/))) then
 
         ! identify the leptons, jets, neutrinos
         countjet=0
@@ -112,7 +112,7 @@ submodule (m_gencuts) m_gencuts_user
         endif
 
         ! inclusive-2j selection
-        if(is_inclusive2j .and. countjet < 2) then
+        if(is_inclusi2j .and. countjet < 2) then
           gencuts_user=.true.
           return
         endif
@@ -134,7 +134,7 @@ submodule (m_gencuts) m_gencuts_user
           endif
         endif
 
-      endif ! runstring in ["inclusive", "inclusive2j", "collinear", "backtoback"]
+      endif ! runstring in ["inclusive", "inclusi2j", "collinear", "backtoback"]
 
       gencuts_user = .false.
       return
