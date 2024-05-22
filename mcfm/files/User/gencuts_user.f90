@@ -56,7 +56,7 @@ submodule (m_gencuts) m_gencuts_user
       ! implement your own cuts here
       real(dp) :: etall,yll, ptll, pttwo
 
-      real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
+      real(dp) :: pt, deltarlepjet, mindeltarlepjet, etarap, aetarap
       logical :: is_inclusive, is_inclusi2j, is_collinear, is_back2back, is_lepton, is_neutrino
       integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart), neutrinoindex(mxpart)
       integer :: j,ijet
