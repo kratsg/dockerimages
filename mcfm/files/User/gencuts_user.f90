@@ -101,11 +101,11 @@ submodule (m_gencuts) m_gencuts_user
           jetindex(countjet)=j+4
         enddo
 
-        write (*,*) "GIORDON: jets, count(lep,jet): ", jets, ",", countlept, ",", countjet, &
-                    "; leptindex: ", leptindex(1), "ptlep1: ", pt(leptindex(1), pjet), "; etalep1: ", etarap(leptindex(1), pjet), &
-                    "; jet1index: ", jetindex(1), "; ptjet1: ", pt(jetindex(1), pjet), "; etajet1: ", etarap(jetindex(1), pjet), &
-                    "; jet2index: ", jetindex(2), "; ptjet2: ", pt(jetindex(2), pjet), "; etajet2: ", etarap(jetindex(2), pjet), &
-                    "; jet3index: ", jetindex(3), "; ptjet3: ", pt(jetindex(3), pjet), "; etajet3: ", etarap(jetindex(3), pjet)
+        ! write (*,*) "GIORDON: jets, count(lep,jet): ", jets, ",", countlept, ",", countjet, &
+        !             "; leptindex: ", leptindex(1), "ptlep1: ", pt(leptindex(1), pjet), "; etalep1: ", etarap(leptindex(1), pjet), &
+        !             "; jet1index: ", jetindex(1), "; ptjet1: ", pt(jetindex(1), pjet), "; etajet1: ", etarap(jetindex(1), pjet), &
+        !             "; jet2index: ", jetindex(2), "; ptjet2: ", pt(jetindex(2), pjet), "; etajet2: ", etarap(jetindex(2), pjet), &
+        !             "; jet3index: ", jetindex(3), "; ptjet3: ", pt(jetindex(3), pjet), "; etajet3: ", etarap(jetindex(3), pjet)
 
         ! number of jets
         if (countjet == 0) then
