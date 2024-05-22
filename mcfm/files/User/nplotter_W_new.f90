@@ -181,6 +181,10 @@ module nplotter_W
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
 
           write (*,*) "GIORDON: drjetlep: ", drjetlep, "; mjj: ", mjj, "; countjet: ", countjet, "; ht: ", ht, "ptratio: ", ptratio
+          do ijet=1,countjet
+            write(*,*) "  LOOP #", ijet, ": pt: ", pt(jetindex(ijet), p), "; etarap: ", etarap(jetindex(ijet), p)
+          enddo
+          write(*,*) "  LEPTON: pt: ", pt(leptindex(1), p), "; etarap: ", etarap(leptindex(1), p)
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then
