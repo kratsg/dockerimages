@@ -100,9 +100,9 @@ module nplotter_W
           include 'leptcuts.f'
           include 'jetcuts.f'
           include 'taucut.f'! abovecut
-          include 'jetlabel.f'! correct njets
+          include 'jetlabel.f'! correct njets ("jets")
 
-          logical:: is_lepton,is_photon,is_hadronic,is_neutrino
+          logical:: is_lepton, is_neutrino
 
           real(dp), intent(in) :: p(mxpart,4)
           real(dp), intent(in) :: wt
@@ -117,7 +117,7 @@ module nplotter_W
           real(dp) :: phistar, phiacop, costhetastar, delphi34
 
           integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart),neutrinoindex(mxpart)
-          integer :: j,njets,ijet,ijetmindeltar
+          integer :: j,njets,ijet,ijetmindeltar,jets
           real(dp) :: pjk(4), wcandidate(4)
 
           pt34 = pttwo(3,4,p)
@@ -133,6 +133,7 @@ module nplotter_W
           do j=3,mxpart
             if (is_lepton(j)) then
               countlept=countlept+1
+              leptindex(countlept)=j
             elseif (is_neutrino(j)) then
               countneutrino=countneutrino+1
               neutrinoindex(countneutrino)=j
@@ -141,12 +142,13 @@ module nplotter_W
 
           ! filter out jets that are overlapping with the lepton
           ! angular separation of leptons and jets (prefer lepton)
-          do j=3,mxpart
-            if (is_hadronic(j)) then
-              if(deltarlepjet(leptindex(1),j,p) < 0.4) cycle
-              countjet=countjet+1
-              jetindex(countjet)=j
-            endif
+          ! Starting at index 5 (which is the first "is_hadronic" number):
+          !   - if jets is 1, p(5,:) is the jet.
+          !   - if jets is 2, p(5,:) is the pt-leading jet, p(6,:) the subleading
+          do j=1,jets
+            if(deltarlepjet(leptindex(1),j+4,p) < 0.4) cycle
+            countjet=countjet+1
+            jetindex(countjet)=j
           enddo
 
           wcandidate(:) = p(neutrinoindex(1),:) + p(leptindex(1),:)
@@ -180,7 +182,12 @@ module nplotter_W
           drjetlep = mindeltarlepjet
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
 
-          write (*,*) "GIORDON: count(lep,jet): ", countlept, ",", countjet, "; drjetlep: ", drjetlep, "; mjj: ", mjj, "; ht: ", ht, "ptratio: ", ptratio, "ptlep1: ", pt(leptindex(1), p), "; etalep1: ", etarap(leptindex(1), p), "; ptjet1: ", pt(jetindex(1), p), "; etajet1: ", etarap(jetindex(1), p), "; ptjet2: ", pt(jetindex(2), p), "; etajet2: ", etarap(jetindex(2), p)
+          write (*,*) "GIORDON: count(lep,jet): ", countlept, ",", countjet,
+                      "; drjetlep: ", drjetlep, "; mjj: ", mjj, "; ht: ", ht, "ptratio: ", ptratio,
+                      "; leptindex: ", leptindex(1), "ptlep1: ", pt(leptindex(1), p), "; etalep1: ", etarap(leptindex(1), p),
+                      "; jet1index: " jetindex(1), "; ptjet1: ", pt(jetindex(1), p), "; etajet1: ", etarap(jetindex(1), p),
+                      "; jet2index: ", jetindex(2), "; ptjet2: ", pt(jetindex(2), p), "; etajet2: ", etarap(jetindex(2), p),
+                      "; jet3index: " jetindex(3), "; ptjet3: ", pt(jetindex(3), p), "; etajet3: ", etarap(jetindex(3), p)
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then

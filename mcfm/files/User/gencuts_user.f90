@@ -42,6 +42,7 @@ submodule (m_gencuts) m_gencuts_user
       include 'leptcuts.f'
       include 'jetcuts.f'
       include 'taucut.f'! for usescet
+      include 'jetlabel.f'! correct njets ("jets")
 
       logical :: gencuts_user
       real(dp), intent(in) :: pjet(mxpart,4)
@@ -56,7 +57,7 @@ submodule (m_gencuts) m_gencuts_user
       real(dp) :: etall,yll, ptll, pttwo
 
       real(dp) :: pt, deltarlepjet, mindeltarlepjet, aetarap
-      logical :: is_inclusive, is_inclusi2j, is_collinear, is_back2back, is_lepton, is_hadronic, is_neutrino
+      logical :: is_inclusive, is_inclusi2j, is_collinear, is_back2back, is_lepton, is_neutrino
       integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart), neutrinoindex(mxpart)
       integer :: j,ijet
 
@@ -91,12 +92,13 @@ submodule (m_gencuts) m_gencuts_user
 
         ! filter out jets that are overlapping with the lepton
         ! angular separation of leptons and jets (prefer lepton)
-        do j=3,mxpart
-          if (is_hadronic(j)) then
-            if(deltarlepjet(leptindex(1),j,pjet) < 0.4) cycle
-            countjet=countjet+1
-            jetindex(countjet)=j
-          endif
+        ! Starting at index 5 (which is the first "is_hadronic" number):
+        !   - if jets is 1, p(5,:) is the jet.
+        !   - if jets is 2, p(5,:) is the pt-leading jet, p(6,:) the subleading
+        do j=1,jets
+          if(deltarlepjet(leptindex(1),j+4,pjet) < 0.4) cycle
+          countjet=countjet+1
+          jetindex(countjet)=j
         enddo
 
         ! number of jets
