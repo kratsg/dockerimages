@@ -48,7 +48,7 @@ submodule (m_gencuts) m_gencuts_user
       integer, intent(in) :: njets
 
       real(dp) :: etarappure, yrap, yraptwo, ayrap
-      real(dp) :: ptpure, puremass
+      real(dp) :: puremass
       real(dp) :: mll, mllga
       real(dp) :: eta3, eta4, eta5
       real(dp) :: pt34
@@ -59,7 +59,7 @@ submodule (m_gencuts) m_gencuts_user
       logical :: is_inclusive, is_inclusive2j, is_collinear, is_back2back, is_lepton, is_hadronic, is_neutrino
       integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart), neutrinoindex(mxpart)
       integer :: j,ijet
-      real(dp) :: deltarwjet, mindeltarwjet, value_deltarwjet, ptratio, ptpure, wpt
+      real(dp) :: deltarwjet, mindeltarwjet, value_deltarwjet
       integer :: ijetmindeltar
       real(dp) :: wcandidate(4)
 
@@ -115,9 +115,7 @@ submodule (m_gencuts) m_gencuts_user
         endif
 
         wcandidate(:) = pjet(neutrinoindex(1),:) + pjet(leptindex(1),:)
-        wpt = ptpure(wcandidate)
 
-        ptratio = 0._dp
         mindeltarwjet = 100._dp
         do ijet=1,countjet
           if(pt(jetindex(ijet), pjet) < 100.0) cycle
@@ -127,7 +125,6 @@ submodule (m_gencuts) m_gencuts_user
             mindeltarwjet = value_deltarwjet
           endif
         enddo
-        ptratio = wpt / pt(jetindex(ijetmindeltar), pjet)
 
         ! inclusive-2j selection
         if(is_inclusive2j .and. countjet < 2) then
@@ -152,7 +149,7 @@ submodule (m_gencuts) m_gencuts_user
           endif
         endif
 
-      endif ! runstring in ["inclusive", "inclusive2j", "collinear"]
+      endif ! runstring in ["inclusive", "inclusive2j", "collinear", "backtoback"]
 
       gencuts_user = .false.
       return
