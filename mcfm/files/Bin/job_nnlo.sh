@@ -11,7 +11,7 @@
 #SBATCH --cpus-per-task=256
 #SBATCH --mail-user=gistark@ucsc.edu
 #SBATCH --mail-type=ALL
-#SBATCH -t 4:00:00
+#SBATCH -t 24:00:00
 
 export OMP_STACKSIZE=512000
 export OMP_NUM_THREADS=256
