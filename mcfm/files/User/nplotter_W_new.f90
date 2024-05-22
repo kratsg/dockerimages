@@ -160,7 +160,7 @@ module nplotter_W
             mjj = puremass(pjk)
           endif
 
-          ht = -100._dp
+          ht = 0._dp
           ptratio = -100._dp
           mindeltarlepjet = 100._dp
           mindeltaphiwjet = 100._dp
