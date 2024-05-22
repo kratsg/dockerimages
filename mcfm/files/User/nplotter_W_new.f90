@@ -182,7 +182,7 @@ module nplotter_W
           drjetlep = mindeltarlepjet
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
 
-          write (*,*) "GIORDON: count(lep,jet): ", countlept, ",", countjet, &
+          write (*,*) "GIORDON: jets, count(lep,jet): ", jets, ",", countlept, ",", countjet, &
                       "; drjetlep: ", drjetlep, "; mjj: ", mjj, "; ht: ", ht, "ptratio: ", ptratio, &
                       "; leptindex: ", leptindex(1), "ptlep1: ", pt(leptindex(1), p), "; etalep1: ", etarap(leptindex(1), p), &
                       "; jet1index: ", jetindex(1), "; ptjet1: ", pt(jetindex(1), p), "; etajet1: ", etarap(jetindex(1), p), &
