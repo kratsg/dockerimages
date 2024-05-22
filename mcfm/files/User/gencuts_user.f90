@@ -86,6 +86,12 @@ submodule (m_gencuts) m_gencuts_user
           endif
         enddo
 
+        ! number of leptons
+        if(countlept /= 1) then
+          gencuts_user=.true.
+          return
+        endif
+
         ! filter out jets that are overlapping with the lepton
         ! angular separation of leptons and jets (prefer lepton)
         do j=3,mxpart
@@ -95,12 +101,6 @@ submodule (m_gencuts) m_gencuts_user
             jetindex(countjet)=j
           endif
         enddo
-
-        ! number of leptons
-        if(countlept /= 1) then
-          gencuts_user=.true.
-          return
-        endif
 
         ! number of jets
         if (countjet == 0) then
