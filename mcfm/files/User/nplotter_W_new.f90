@@ -117,7 +117,7 @@ module nplotter_W
           real(dp) :: phistar, phiacop, costhetastar, delphi34
 
           integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart),neutrinoindex(mxpart)
-          integer :: j,njets,ijet,ijetmindeltar,jets
+          integer :: j,njets,ijet,ijetmindeltar
           real(dp) :: pjk(4), wcandidate(4)
 
           pt34 = pttwo(3,4,p)
