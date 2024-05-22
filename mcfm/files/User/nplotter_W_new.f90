@@ -180,11 +180,7 @@ module nplotter_W
           drjetlep = mindeltarlepjet
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
 
-          write (*,*) "GIORDON: drjetlep: ", drjetlep, "; mjj: ", mjj, "; countjet: ", countjet, "; ht: ", ht, "ptratio: ", ptratio
-          do ijet=1,countjet
-            write(*,*) "  LOOP #", ijet, ": pt: ", pt(jetindex(ijet), p), "; etarap: ", etarap(jetindex(ijet), p)
-          enddo
-          write(*,*) "  LEPTON: pt: ", pt(leptindex(1), p), "; etarap: ", etarap(leptindex(1), p)
+          write (*,*) "GIORDON: count(lep,jet): " countlept, ",", countjet, "; drjetlep: ", drjetlep, "; mjj: ", mjj, "; ht: ", ht, "ptratio: ", ptratio, "ptlep1: ", pt(leptindex(1), p), "; etalep1: ", etarap(leptindex(1), p), "; ptjet1: ", pt(jetindex(1), p), "; etajet1: ", etarap(jetindex(1), p), , "; ptjet2: ", pt(jetindex(2), p), "; etajet2: ", etarap(jetindex(2), p)
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then
