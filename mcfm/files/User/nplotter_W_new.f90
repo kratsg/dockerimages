@@ -185,9 +185,9 @@ module nplotter_W
           write (*,*) "GIORDON: count(lep,jet): ", countlept, ",", countjet, &
                       "; drjetlep: ", drjetlep, "; mjj: ", mjj, "; ht: ", ht, "ptratio: ", ptratio, &
                       "; leptindex: ", leptindex(1), "ptlep1: ", pt(leptindex(1), p), "; etalep1: ", etarap(leptindex(1), p), &
-                      "; jet1index: " jetindex(1), "; ptjet1: ", pt(jetindex(1), p), "; etajet1: ", etarap(jetindex(1), p), &
+                      "; jet1index: ", jetindex(1), "; ptjet1: ", pt(jetindex(1), p), "; etajet1: ", etarap(jetindex(1), p), &
                       "; jet2index: ", jetindex(2), "; ptjet2: ", pt(jetindex(2), p), "; etajet2: ", etarap(jetindex(2), p), &
-                      "; jet3index: " jetindex(3), "; ptjet3: ", pt(jetindex(3), p), "; etajet3: ", etarap(jetindex(3), p)
+                      "; jet3index: ", jetindex(3), "; ptjet3: ", pt(jetindex(3), p), "; etajet3: ", etarap(jetindex(3), p)
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then
