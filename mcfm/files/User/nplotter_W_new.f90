@@ -154,14 +154,14 @@ module nplotter_W
 
           ptj1 = pt(jetindex(1),p)
 
-          mjj = 0._dp
+          mjj = -100._dp
           if(countjet > 1) then
             pjk(:) = p(jetindex(1),:) + p(jetindex(2),:)
             mjj = puremass(pjk)
           endif
 
-          ht = 0._dp
-          ptratio = 0._dp
+          ht = -100._dp
+          ptratio = -100._dp
           mindeltarlepjet = 100._dp
           mindeltaphiwjet = 100._dp
           do ijet=1,countjet
@@ -179,6 +179,8 @@ module nplotter_W
 
           drjetlep = mindeltarlepjet
           ptratio = wpt / pt(jetindex(ijetmindeltar), p)
+
+          write (*,*) "GIORDON: drjetlep: ", drjetlep, "; mjj: ", mjj, "; countjet: ", countjet, "; ht: ", ht, "ptratio: ", ptratio
 
           if (origKpart == kresummed) then
               if (abovecut .eqv. .false.) then
