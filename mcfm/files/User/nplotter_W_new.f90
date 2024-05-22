@@ -148,7 +148,7 @@ module nplotter_W
           do j=1,jets
             if(deltarlepjet(leptindex(1),j+4,p) < 0.4) cycle
             countjet=countjet+1
-            jetindex(countjet)=j
+            jetindex(countjet)=j+4
           enddo
 
           wcandidate(:) = p(neutrinoindex(1),:) + p(leptindex(1),:)

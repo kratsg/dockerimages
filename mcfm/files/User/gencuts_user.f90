@@ -98,7 +98,7 @@ submodule (m_gencuts) m_gencuts_user
         do j=1,jets
           if(deltarlepjet(leptindex(1),j+4,pjet) < 0.4) cycle
           countjet=countjet+1
-          jetindex(countjet)=j
+          jetindex(countjet)=j+4
         enddo
 
         write (*,*) "GIORDON: jets, count(lep,jet): ", jets, ",", countlept, ",", countjet, &
