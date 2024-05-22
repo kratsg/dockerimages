@@ -62,8 +62,8 @@ submodule (m_gencuts) m_gencuts_user
 
       ! implement your own cuts here
 
-      is_inclusi2j = index(runstring, "inclusi2j") /= 0
       is_inclusive = index(runstring, "inclusive") /= 0
+      is_inclusi2j = index(runstring, "inclusi2j") /= 0
       is_collinear = index(runstring, "collinear") /= 0
       is_back2back = index(runstring, "backtoback") /= 0
 
