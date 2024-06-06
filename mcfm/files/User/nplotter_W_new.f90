@@ -172,7 +172,7 @@ module nplotter_W
             if(pt(jetindex(ijet), p) < 100.0) cycle
             mindeltarlepjet = min(deltarlepjet(leptindex(1),jetindex(ijet),p), mindeltarlepjet)
 
-            value_deltaphiwjet = deltaphiwjet(wcandidate,jetindex(ijet),p)
+            value_deltaphiwjet = abs(deltaphiwjet(wcandidate,jetindex(ijet),p))
             if (value_deltaphiwjet < mindeltaphiwjet) then
                 ijetmindeltar = ijet
                 mindeltaphiwjet = value_deltaphiwjet
