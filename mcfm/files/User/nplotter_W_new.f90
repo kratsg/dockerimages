@@ -99,7 +99,7 @@ module nplotter_W
                                           800.0_dp,900.0_dp,1000.0_dp,1250.0_dp,1500.0_dp,1750.0_dp],'ptratio_closestjetpt')
 
           ! minimum dPhi between jet and W-candidate
-          histos(14) = plot_setup_uniform(0.0_dp,3.2_dp,0.2_dp,'mindeltaphiwjet')
+          histos(14) = plot_setup_uniform(0.0_dp,3.4_dp,0.2_dp,'mindeltaphiwjet')
 
       end subroutine
 
