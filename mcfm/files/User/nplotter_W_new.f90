@@ -84,6 +84,23 @@ module nplotter_W
                                           1.20_dp,1.28_dp,1.36_dp,1.44_dp,1.52_dp, &
                                           1.60_dp,1.68_dp,1.76_dp,1.84_dp,1.92_dp,2.0_dp], 'ptratio')
 
+          ! ratio of: Wpt / closest jet pT (rebinned with 1.0 in the middle of a larger bin)
+          histos(12) = plot_setup_custom([0.00_dp,0.08_dp,0.16_dp,0.24_dp,0.32_dp, &
+                                          0.40_dp,0.48_dp,0.56_dp,0.64_dp,0.72_dp, &
+                                          0.80_dp,0.84_dp,0.88_dp,0.92_dp,0.96_dp, &
+                                                  1.04_dp,1.08_dp,1.12_dp,1.16_dp, &
+                                          1.20_dp,1.28_dp,1.36_dp,1.44_dp,1.52_dp, &
+                                          1.60_dp,1.68_dp,1.76_dp,1.84_dp,1.92_dp,2.0_dp], 'ptratio_centered')
+
+          ! pt of jet closest to W-candidate (used in ptratio)
+          histos(13) = plot_setup_custom([30.00_dp,40.00_dp,50.00_dp,60.00_dp,70.00_dp,80.00_dp,90.00_dp, &
+                                          100.00_dp,150.00_dp,200.00_dp,250.00_dp,300.00_dp,350.00_dp,400.00_dp,450.00_dp, &
+                                          500.0_dp,550.0_dp,600.0_dp,700.0_dp, &
+                                          800.0_dp,900.0_dp,1000.0_dp,1250.0_dp,1500.0_dp,1750.0_dp],'ptratio_closestjetpt')
+
+          ! minimum dPhi between jet and W-candidate
+          histos(14) = plot_setup_uniform(0.0_dp,3.2_dp,0.2_dp,'mindeltaphiwjet')
+
       end subroutine
 
       subroutine book(p,wt,ids,vals,wts)
@@ -114,10 +131,10 @@ module nplotter_W
           real(dp) :: pt, pttwo, puremass, twomass, delphi, etarap, ptpure, deltarlepjet, deltaphiwjet, aetarap
 
           real(dp) :: pt34, ptj1, drjetlep, wpt, ht, mjj, mindeltarlepjet, value_deltaphiwjet, mindeltaphiwjet, ptratio, trans
-          real(dp) :: phistar, phiacop, costhetastar, delphi34
+          real(dp) :: phistar, phiacop, costhetastar, delphi34, closestjetpt
 
           integer :: countjet, countlept, countneutrino, jetindex(mxpart), leptindex(mxpart),neutrinoindex(mxpart)
-          integer :: j,njets,ijet,ijetmindeltar
+          integer :: j,njets,ijet,ijetmindeltaphi
           real(dp) :: pjk(4), wcandidate(4)
 
           pt34 = pttwo(3,4,p)
@@ -174,13 +191,14 @@ module nplotter_W
 
             value_deltaphiwjet = abs(deltaphiwjet(wcandidate,jetindex(ijet),p))
             if (value_deltaphiwjet < mindeltaphiwjet) then
-                ijetmindeltar = ijet
+                ijetmindeltaphi = ijet
                 mindeltaphiwjet = value_deltaphiwjet
             endif
           enddo
 
           drjetlep = mindeltarlepjet
-          ptratio = wpt / pt(jetindex(ijetmindeltar), p)
+          closestjetpt = pt(jetindex(ijetmindeltaphi), p)
+          ptratio = wpt / closestjetpt
 
           ! write (*,*) "GIORDON: jets, count(lep,jet): ", jets, ",", countlept, ",", countjet, &
           !             "; drjetlep: ", drjetlep, "; mjj: ", mjj, "; ht: ", ht, "ptratio: ", ptratio, &
@@ -213,8 +231,8 @@ module nplotter_W
           endif
 
           ids = histos
-          vals = [pt34,pt34,pt34,phistar,real(countjet,dp),ptj1,ht,drjetlep,wpt,mjj,ptratio]
-          wts = [wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans]
+          vals = [pt34,pt34,pt34,phistar,real(countjet,dp),ptj1,ht,drjetlep,wpt,mjj,ptratio,ptratio,closestjetpt,mindeltaphiwjet]
+          wts = [wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans,wt*trans]
 
       end subroutine
 
