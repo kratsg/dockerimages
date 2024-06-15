@@ -24,7 +24,7 @@ module nplotter_W
 
           include 'mpicommon.f'
 
-          allocate(histos(11))
+          allocate(histos(14))
 
           if (rank == 0) then
               write (*,*) "RESUMMATION: Using transition with switch ", transitionSwitch
