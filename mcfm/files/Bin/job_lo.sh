@@ -19,9 +19,9 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
 # see: https://stackoverflow.com/a/53759961
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=11 -general%runstring=Wp_collinear -nnlo%taucut=0.01
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=16 -general%runstring=Wm_collinear -nnlo%taucut=0.01
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=11 -general%runstring=Wp_inclusive -nnlo%taucut=0.01
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=16 -general%runstring=Wm_inclusive -nnlo%taucut=0.01
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W+' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=11 -general%runstring=Wp_backtoback -nnlo%taucut=0.01
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W-' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=16 -general%runstring=Wm_backtoback -nnlo%taucut=0.01
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=11 -general%runstring=Wp_collinear
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=16 -general%runstring=Wm_collinear
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=11 -general%runstring=Wp_inclusive
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=16 -general%runstring=Wm_inclusive
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W+' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=11 -general%runstring=Wp_backtoback
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W-' ./mcfm CollinearW.ini -general%part=lo -general%rundir=collinearW_lo -general%nproc=16 -general%runstring=Wm_backtoback

@@ -19,11 +19,11 @@ export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 
 # see: https://stackoverflow.com/a/53759961
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_collinear -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_collinear -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_inclusive -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_inclusive -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_inclusi2j -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_inclusi2j -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_backtoback -integration%readin=.false.
-srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_backtoback -integration%readin=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_collinear -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='collinear W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_collinear -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_inclusive -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusive W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_inclusive -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_inclusi2j -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='inclusi2j W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_inclusi2j -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W+' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=11 -general%runstring=Wp_backtoback -integration%readin=.false. -scales%doscalevar=.false.
+srun --mpi=cray_shasta --cpu_bind=cores --job-name='back2back W-' ./mcfm CollinearW.ini -general%part=nnlo -general%rundir=collinearW_nnlo -general%nproc=16 -general%runstring=Wm_backtoback -integration%readin=.false. -scales%doscalevar=.false.
